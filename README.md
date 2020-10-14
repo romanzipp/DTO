@@ -21,18 +21,32 @@ composer require romanzipp/dto
 | `public $foo` | no | `''` | ✅ |
 | `public $foo` | no | `NULL` | ✅ |
 | `public $foo` | no | *none* | ✅ |
+| `public $foo` | **yes** | `''` | ✅ |
+| `public $foo` | **yes** | `NULL` | ✅ |
+| `public $foo` | **yes** | *none* | 🚫 |
 | | | |
 | `public string $foo` | no | `''` | ✅ |
 | `public string $foo` | no | `NULL` | 🚫 |
 | `public string $foo` | no | *none* | 🚫 |
-| | | |
-| `public string $foo` | yes | `''` | ✅ |
-| `public string $foo` | yes | `NULL` | 🚫 |
-| `public string $foo` | yes | *none* | 🚫 | 
+| `public string $foo` | **yes** | `''` | ✅ |
+| `public string $foo` | **yes** | `NULL` | 🚫 |
+| `public string $foo` | **yes** | *none* | 🚫 | 
 | | | |
 | `public ?string $foo` | no | `''` | ✅ |
 | `public ?string $foo` | no | `NULL` | ✅ |
 | `public ?string $foo` | no | *none* | 🚫 |
+| `public ?string $foo` | **yes** | `''` | ✅ |
+| `public ?string $foo` | **yes** | `NULL` | ✅ |
+| `public ?string $foo` | **yes** | *none* | 🚫 |
+| | | |
+| `public ?string $foo = null` | no | `''` | ✅ |
+| `public ?string $foo = null` | no | `NULL` | ✅ |
+| `public ?string $foo = null` | no | *none* | ✅ |
+| `public ?string $foo = null` | **yes** | `''` | ⚠️* |
+| `public ?string $foo = null` | **yes** | `NULL` | ⚠️* |
+| `public ?string $foo = null` | **yes** | *none* | ⚠️* |
+
+\* Attributes with default values cannot be required.
 
 ## Testing
 
