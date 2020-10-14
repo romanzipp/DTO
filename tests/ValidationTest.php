@@ -14,7 +14,7 @@ use romanzipp\DTO\Tests\Support\SimpleDataTypeHinted;
 use romanzipp\DTO\Tests\Support\SimpleDataTypeHintedRequired;
 use romanzipp\DTO\Values\MissingValue;
 
-class BasicTest extends TestCase
+class ValidationTest extends TestCase
 {
     public function testSimpleData()
     {
@@ -90,6 +90,6 @@ class BasicTest extends TestCase
     {
         $this->expectException(InvalidDeclarationException::class);
 
-        $attribute = Attribute::collectFromClass(SimpleDataNullableDefaultNullRequired::class)['foo'];
+        Attribute::collectFromInstance(new SimpleDataNullableDefaultNullRequired())['foo'];
     }
 }

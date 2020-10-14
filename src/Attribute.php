@@ -141,6 +141,10 @@ final class Attribute
             return null;
         }
 
+        if ($value instanceof MissingValue) {
+            return null;
+        }
+
         foreach ($this->allowedTypes as $allowedType) {
 
             if ($value instanceof $allowedType) {

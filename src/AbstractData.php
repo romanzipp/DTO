@@ -22,7 +22,7 @@ abstract class AbstractData
                 throw InvalidDeclarationException::fromAttribute($attribute);
             }
 
-            $value = new MissingValue();
+            $value = new MissingValue;
 
             if (array_key_exists($attribute->name, $data)) {
                 $value = $data[$attribute->name];
