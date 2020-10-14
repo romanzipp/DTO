@@ -27,14 +27,14 @@ composer require romanzipp/dto
 | | | |
 | `public string $foo` | no | `''` | ✅ |
 | `public string $foo` | no | `NULL` | 🚫 |
-| `public string $foo` | no | *none* | 🚫 |
+| `public string $foo` | no | *none* | ✅ |
 | `public string $foo` | **yes** | `''` | ✅ |
 | `public string $foo` | **yes** | `NULL` | 🚫 |
 | `public string $foo` | **yes** | *none* | 🚫 | 
 | | | |
 | `public ?string $foo` | no | `''` | ✅ |
 | `public ?string $foo` | no | `NULL` | ✅ |
-| `public ?string $foo` | no | *none* | 🚫 |
+| `public ?string $foo` | no | *none* | ✅ |
 | `public ?string $foo` | **yes** | `''` | ✅ |
 | `public ?string $foo` | **yes** | `NULL` | ✅ |
 | `public ?string $foo` | **yes** | *none* | 🚫 |
