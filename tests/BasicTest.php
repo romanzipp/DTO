@@ -43,7 +43,7 @@ class BasicTest extends TestCase
         self::assertValid($attribute, '');
         self::assertInvalid($attribute, 1);
         self::assertInvalid($attribute, null);
-        self::assertInvalid($attribute, new MissingValue());
+        self::assertValid($attribute, new MissingValue());
     }
 
     public function testSimpleDataTypeHintedRequired()
@@ -63,7 +63,7 @@ class BasicTest extends TestCase
         self::assertValid($attribute, '');
         self::assertInvalid($attribute, 1);
         self::assertValid($attribute, null);
-        self::assertInvalid($attribute, new MissingValue());
+        self::assertValid($attribute, new MissingValue());
     }
 
     public function testSimpleDataNullableRequired()
