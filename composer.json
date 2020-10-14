@@ -1,0 +1,33 @@
+{
+    "name": "romanzipp/dto",
+    "description": "A strongly typed Data Transfer Object without magic for PHP 7.4+",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "romanzipp",
+            "email": "ich@ich.wtf",
+            "homepage": "https://ich.wtf"
+        }
+    ],
+    "require": {
+        "php": "^7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "symfony/var-dumper": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "romanzipp\\DTO\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "romanzipp\\DTO\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
