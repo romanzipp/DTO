@@ -33,6 +33,11 @@ class InvalidDataException extends Exception
         return new self("`NULL` is not allowed for attribute `{$attribute->name}`");
     }
 
+    public static function notFlexible(array $keys): self
+    {
+        return new self("You have provided more values than allowed to a non-flexible object");
+    }
+
     /**
      * @param \romanzipp\DTO\Exceptions\InvalidDataException[] $exceptions
      * @return static

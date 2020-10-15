@@ -9,14 +9,34 @@ use romanzipp\DTO\Values\MissingValue;
 
 abstract class AbstractData
 {
+    /**
+     * Define attributes which must be specified when creating a new data instance.
+     *
+     * @var array
+     */
     protected static array $required = [];
 
+    /**
+     * Define weather you can pass other values other than defined.
+     *
+     * @var bool
+     */
+    protected static bool $flexible = false;
+
+    /**
+     * The parsed attributes.
+     *
+     * @var \romanzipp\DTO\Attribute[]
+     */
     protected array $attributes = [];
 
     public function __construct(array $data = [])
     {
+        // Analyse the declared attributes
         $this->attributes = Attribute::collectFromInstance($this);
 
+        // Collect errors instead of throwing the first exception to make working with
+        // large sets of attribute less of a hassle
         $errors = [];
 
         foreach ($this->attributes as $attribute) {
@@ -25,6 +45,7 @@ abstract class AbstractData
                 throw InvalidDeclarationException::fromAttribute($attribute);
             }
 
+            // Get the attribute value from provided data
             $value = $attribute->extractValueFromData($data);
 
             if ( ! $attribute->isValid($value)) {
@@ -34,6 +55,7 @@ abstract class AbstractData
                 continue;
             }
 
+            // Do not set missing values
             if ($value instanceof MissingValue) {
                 continue;
             }
@@ -43,6 +65,21 @@ abstract class AbstractData
 
         if ( ! empty($errors)) {
             throw InvalidDataException::any($errors);
+        }
+
+        // Calculate keys that are provided but not declared as attributes
+        $diff = array_diff_key($data, $this->attributes);
+
+        // Fail if there are additional attributes but the instance is not flexible
+        if (static::$flexible === false && count($diff) > 0) {
+            throw InvalidDataException::notFlexible(
+                array_keys($diff)
+            );
+        }
+
+        // Set additional attributes
+        foreach ($diff as $key => $value) {
+            $this->{$key} = $value;
         }
     }
 
