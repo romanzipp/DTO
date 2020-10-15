@@ -19,7 +19,7 @@ composer require romanzipp/dto
 ```php
 use romanzipp\DTO\AbstractData;
 
-class MyData extends AbstractData
+class DummyData extends AbstractData
 {
     protected static array $required = [
         'name',
@@ -28,31 +28,19 @@ class MyData extends AbstractData
 
     public string $name;
 
-    public $stuff;
-
     public ?string $nickname;
+
+    public $stuff;
 
     public DateTime $birthday;
 
     public bool $subscribeNewsletter = false;
-} 
-```
-
-### Available Methods
-
-```php
-use romanzipp\DTO\AbstractData;
-
-class DummyData extends AbstractData
-{
-    public string $name;
 }
 
 $data = new DummyData([
     'name' => 'Roman',
+    'stuff' => [],
 ]);
-
-$data->toArray(); // ['name' => 'Roman'];
 ```
 
 ### Flexible DTOs
@@ -89,7 +77,7 @@ class DummyData extends AbstractData
 $data = new DummyData([
     'firstName' => 'Roman',
 ]);
-
+$data->toArray();                        // ['firstName' => 'Roman'];
 $data->toArray(Cases\CamelCase::class);  // ['firstName' => 'Roman'];
 $data->toArray(Cases\KebabCase::class);  // ['first-name' => 'Roman'];
 $data->toArray(Cases\PascalCase::class); // ['FirstName' => 'Roman'];
