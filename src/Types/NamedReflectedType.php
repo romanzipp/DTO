@@ -4,7 +4,7 @@ namespace romanzipp\DTO\Types;
 
 use ReflectionNamedType;
 
-class ReflectionType implements Type
+class NamedReflectedType implements Type
 {
     /**
      * Maps type names from \ReflectionNamedType to values matching gettype() output.

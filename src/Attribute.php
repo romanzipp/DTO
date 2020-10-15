@@ -5,8 +5,9 @@ namespace romanzipp\DTO;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionProperty;
+use ReflectionType;
 use romanzipp\DTO\Exceptions\InvalidDataException;
-use romanzipp\DTO\Types\ReflectionType;
+use romanzipp\DTO\Types;
 use romanzipp\DTO\Values\MissingValue;
 
 final class Attribute
@@ -279,10 +280,17 @@ final class Attribute
             return [];
         }
 
-        if ($type instanceof ReflectionNamedType) {
+        // TODO: Implement \ReflectionUnionType for PHP 8.0+
 
+        if ($type instanceof ReflectionNamedType) {
             return [
-                new ReflectionType($type),
+                new Types\NamedReflectedType($type),
+            ];
+        }
+
+        if ($type instanceof ReflectionType && ! $type->allowsNull()) {
+            return [
+                new Types\NotNullType(),
             ];
         }
 
