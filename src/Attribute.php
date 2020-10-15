@@ -157,14 +157,6 @@ final class Attribute
             }
 
             return null;
-
-            if ($value instanceof $allowedType) {
-                return null;
-            }
-
-            if (gettype($value) === $allowedType) {
-                return null;
-            }
         }
 
         return InvalidDataException::invalidType($this, $value);
