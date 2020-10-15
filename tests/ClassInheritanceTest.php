@@ -9,9 +9,8 @@ use romanzipp\DTO\Tests\Support\Classes\TestClass;
 use romanzipp\DTO\Tests\Support\Classes\TestClassExtendsAbstractClass;
 use romanzipp\DTO\Tests\Support\Classes\TestClassImplementsInterface;
 use romanzipp\DTO\Tests\Support\Classes\TestClassImplementsInterfaceExtends;
-use romanzipp\DTO\Tests\Support\Classes\TestClassUsingTrait;
+use romanzipp\DTO\Tests\Support\Classes\TestClassOther;
 use romanzipp\DTO\Tests\Support\Classes\TestInterface;
-use romanzipp\DTO\Tests\Support\Classes\TestTrait;
 
 class ClassInheritanceTest extends TestCase
 {
@@ -22,6 +21,15 @@ class ClassInheritanceTest extends TestCase
         };
 
         self::assertInstanceOf(TestClass::class, $data->object);
+    }
+
+    public function testClassFailing()
+    {
+        $this->expectException(InvalidDataException::class);
+
+        $data = new class(['object' => new TestClassOther]) extends AbstractData {
+            public TestClass $object;
+        };
     }
 
     public function testInterface()
@@ -58,15 +66,5 @@ class ClassInheritanceTest extends TestCase
         };
 
         self::assertInstanceOf(TestClassExtendsAbstractClass::class, $data->object);
-    }
-
-    // weird shit
-    public function testTrait()
-    {
-        $data = new class(['object' => new TestClassUsingTrait]) extends AbstractData {
-            public TestTrait $object;
-        };
-
-        self::assertInstanceOf(TestClassUsingTrait::class, $data->object);
     }
 }
