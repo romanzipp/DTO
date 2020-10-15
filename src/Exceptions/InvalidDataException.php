@@ -35,6 +35,12 @@ class InvalidDataException extends Exception
 
     public static function notFlexible(array $keys): self
     {
+        if (count($keys) > 0) {
+            return new self(
+                sprintf('You have provided more values (`%s`) than allowed to a non-flexible object', implode('`, `', $keys))
+            );
+        }
+
         return new self("You have provided more values than allowed to a non-flexible object");
     }
 
