@@ -19,7 +19,7 @@ composer require romanzipp/dto
 ## Validation
 
 | Definition | Required | Value | Valid | `isset()` |
-| --- | :---: | --- | :---: | --- |
+| --- | :---: | --- | :---: | :---: |
 | `public $foo` | no | `''` | ✅ | **true** |
 | `public $foo` | no | `NULL` | ✅ | **true** |
 | `public $foo` | no | *none* | ✅ | **true** |
