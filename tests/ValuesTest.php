@@ -37,6 +37,13 @@ class ValuesTest extends TestCase
     public function testSimpleDataRequired()
     {
         $data = new SimpleDataRequired([
+            'foo' => null,
+        ]);
+
+        self::assertTrue($data->isset('foo'));
+        self::assertSame(null, $data->foo);
+
+        $data = new SimpleDataRequired([
             'foo' => 'bar',
         ]);
 
