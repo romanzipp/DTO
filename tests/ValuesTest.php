@@ -2,6 +2,8 @@
 
 namespace romanzipp\DTO\Tests;
 
+use Closure;
+use romanzipp\DTO\AbstractData;
 use romanzipp\DTO\Tests\Support\SimpleData;
 use romanzipp\DTO\Tests\Support\SimpleDataNullable;
 use romanzipp\DTO\Tests\Support\SimpleDataNullableDefaultNull;
@@ -12,6 +14,63 @@ use romanzipp\DTO\Tests\Support\SimpleDataTypeHintedRequired;
 
 class ValuesTest extends TestCase
 {
+    public function testArrayValues()
+    {
+        $data = new class(['array' => []]) extends AbstractData {
+            public array $array;
+        };
+
+        self::assertSame([], $data->array);
+    }
+
+    public function testBooleanValues()
+    {
+        $data = new class(['bool' => true]) extends AbstractData {
+            public bool $bool;
+        };
+
+        self::assertSame(true, $data->bool);
+    }
+
+    public function testIntValues()
+    {
+        $data = new class(['int' => 1]) extends AbstractData {
+            public int $int;
+        };
+
+        self::assertSame(1, $data->int);
+    }
+
+    public function testFloatValues()
+    {
+        $data = new class(['float' => 1.0]) extends AbstractData {
+            public float $float;
+        };
+
+        self::assertSame(1.0, $data->float);
+    }
+
+    public function testClosureValues()
+    {
+        $data = new class(['callback' => fn() => null]) extends AbstractData {
+            public Closure $callback;
+        };
+
+        self::assertIsCallable($data->callback);
+    }
+
+    public function testObjectValues()
+    {
+        $object = new class {
+        };
+
+        $data = new class(['object' => $object]) extends AbstractData {
+            public object $object;
+        };
+
+        self::assertIsObject($data->object);
+    }
+
     public function testSimpleData()
     {
         $data = new SimpleData([]);
