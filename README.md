@@ -38,6 +38,64 @@ class MyData extends AbstractData
 } 
 ```
 
+### Available Methods
+
+```php
+use romanzipp\DTO\AbstractData;
+
+class DummyData extends AbstractData
+{
+    public string $name;
+}
+
+$data = new DummyData([
+    'name' => 'Roman',
+]);
+
+$data->toArray(); // ['name' => 'Roman'];
+```
+
+### Flexible DTOs
+
+```php
+use romanzipp\DTO\AbstractData;
+
+class DummyData extends AbstractData
+{
+    protected static bool $flexible = true;
+
+    public string $name;
+}
+
+$data = new DummyData([
+    'name' => 'Roman',
+    'website' => 'ich.wtf',
+]);
+
+$data->toArray(); // ['name' => 'Roman', 'website' => 'ich.wtf];
+```
+
+### Case Formatter
+
+```php
+use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Strings;
+
+class DummyData extends AbstractData
+{
+    public string $firstName;
+}
+
+$data = new DummyData([
+    'firstName' => 'Roman',
+]);
+
+$data->toArray(Strings\CamelCase::class);  // ['firstName' => 'Roman'];
+$data->toArray(Strings\KebabCase::class);  // ['first-name' => 'Roman'];
+$data->toArray(Strings\PascalCase::class); // ['FirstName' => 'Roman'];
+$data->toArray(Strings\SnakeCase::class);  // ['first_name' => 'Roman'];
+```
+
 ## Validation
 
 | Definition | Required | Value | Valid | `isset()` |
