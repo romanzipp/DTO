@@ -11,6 +11,11 @@ abstract class AbstractCase
         $this->values = $values;
     }
 
+    /**
+     * Convert all keys and return the array.
+     *
+     * @return array
+     */
     public function format(): array
     {
         return array_combine(
@@ -21,11 +26,24 @@ abstract class AbstractCase
         );
     }
 
+    /**
+     * Convert string to pascal case.
+     *
+     * @param string $key
+     * @return string
+     */
     protected static function toPascalCase(string $key): string
     {
         return str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
     }
 
+    /**
+     * Join a given delimiter on case breaks.
+     *
+     * @param string $key
+     * @param string $delimiter
+     * @return string
+     */
     protected static function joinDelimiter(string $key, string $delimiter): string
     {
         if ( ! ctype_lower($key)) {

@@ -179,11 +179,7 @@ final class Attribute
      */
     public function isCorrectlyDeclared(): bool
     {
-        if ($this->hasType && $this->allowsNull && $this->isInitialized && $this->isRequired) {
-            return false;
-        }
-
-        return true;
+        return ! ($this->hasType && $this->allowsNull && $this->isInitialized && $this->isRequired);
     }
 
     /*
