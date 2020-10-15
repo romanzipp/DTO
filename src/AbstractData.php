@@ -2,6 +2,7 @@
 
 namespace romanzipp\DTO;
 
+use InvalidArgumentException;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Exceptions\InvalidDeclarationException;
 use romanzipp\DTO\Values\MissingValue;
@@ -54,8 +55,39 @@ abstract class AbstractData
         return new static($data);
     }
 
+    /**
+     * Get the array of required attributes.
+     *
+     * @return array
+     */
     public static function getRequired(): array
     {
         return static::$required;
+    }
+
+    /**
+     * Get the attribute instance for a given attribute key.
+     *
+     * @param string $key
+     * @return \romanzipp\DTO\Attribute
+     */
+    private function getAttribute(string $key): Attribute
+    {
+        if ( ! array_key_exists($key, $this->attributes)) {
+            throw new InvalidArgumentException("Can not access missing data attribute `{$key}`");
+        }
+
+        return $this->attributes[$key];
+    }
+
+    /**
+     * Determine if the attribute has been initialized with a value.
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function isset(string $key): bool
+    {
+        return array_key_exists($this->getAttribute($key)->name, get_object_vars($this));
     }
 }
