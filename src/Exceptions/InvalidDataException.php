@@ -37,11 +37,11 @@ class InvalidDataException extends Exception
     {
         if (count($keys) > 0) {
             return new self(
-                sprintf('You have provided more values (`%s`) than allowed to a non-flexible object', implode('`, `', $keys))
+                sprintf('The provided values `%s` are not declared as attributes', implode('`, `', $keys))
             );
         }
 
-        return new self("You have provided more values than allowed to a non-flexible object");
+        return new self('Some provided values are not declared as attributes');
     }
 
     /**
