@@ -6,6 +6,7 @@ use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionProperty;
 use romanzipp\DTO\Exceptions\InvalidDataException;
+use romanzipp\DTO\Types\ReflectionType;
 use romanzipp\DTO\Values\MissingValue;
 
 final class Attribute
@@ -26,6 +27,9 @@ final class Attribute
 
     public bool $hasDefaultValue;
 
+    /**
+     * @var \romanzipp\DTO\Types\Type[]
+     */
     public array $allowedTypes;
 
     public function __construct(ReflectionProperty $reflectionProperty, ?AbstractData $data = null)
@@ -145,7 +149,13 @@ final class Attribute
             return null;
         }
 
-        foreach ($this->allowedTypes as $allowedType) {
+        foreach ($this->allowedTypes as $type) {
+
+            if ( ! $type->isValid($value)) {
+                continue;
+            }
+
+            return null;
 
             if ($value instanceof $allowedType) {
                 return null;
@@ -270,8 +280,9 @@ final class Attribute
         }
 
         if ($type instanceof ReflectionNamedType) {
+
             return [
-                $type->getName(),
+                new ReflectionType($type),
             ];
         }
 
