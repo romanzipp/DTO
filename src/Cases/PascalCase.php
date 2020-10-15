@@ -1,6 +1,6 @@
 <?php
 
-namespace romanzipp\DTO\Strings;
+namespace romanzipp\DTO\Cases;
 
 class PascalCase extends AbstractCase
 {

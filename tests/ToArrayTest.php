@@ -3,10 +3,10 @@
 namespace romanzipp\DTO\Tests;
 
 use romanzipp\DTO\AbstractData;
-use romanzipp\DTO\Strings\CamelCase;
-use romanzipp\DTO\Strings\KebabCase;
-use romanzipp\DTO\Strings\PascalCase;
-use romanzipp\DTO\Strings\SnakeCase;
+use romanzipp\DTO\Cases\CamelCase;
+use romanzipp\DTO\Cases\KebabCase;
+use romanzipp\DTO\Cases\PascalCase;
+use romanzipp\DTO\Cases\SnakeCase;
 
 class ToArrayTest extends TestCase
 {

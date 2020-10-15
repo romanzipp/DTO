@@ -165,7 +165,7 @@ abstract class AbstractData implements JsonSerializable
             return $values;
         }
 
-        /** @var \romanzipp\DTO\Strings\AbstractCase $caseFormatter */
+        /** @var \romanzipp\DTO\Cases\AbstractCase $caseFormatter */
         $caseFormatter = new $case($values);
 
         return $caseFormatter->format();

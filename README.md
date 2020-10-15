@@ -79,7 +79,7 @@ $data->toArray(); // ['name' => 'Roman', 'website' => 'ich.wtf];
 
 ```php
 use romanzipp\DTO\AbstractData;
-use romanzipp\DTO\Strings;
+use romanzipp\DTO\Cases;
 
 class DummyData extends AbstractData
 {
@@ -90,10 +90,10 @@ $data = new DummyData([
     'firstName' => 'Roman',
 ]);
 
-$data->toArray(Strings\CamelCase::class);  // ['firstName' => 'Roman'];
-$data->toArray(Strings\KebabCase::class);  // ['first-name' => 'Roman'];
-$data->toArray(Strings\PascalCase::class); // ['FirstName' => 'Roman'];
-$data->toArray(Strings\SnakeCase::class);  // ['first_name' => 'Roman'];
+$data->toArray(Cases\CamelCase::class);  // ['firstName' => 'Roman'];
+$data->toArray(Cases\KebabCase::class);  // ['first-name' => 'Roman'];
+$data->toArray(Cases\PascalCase::class); // ['FirstName' => 'Roman'];
+$data->toArray(Cases\SnakeCase::class);  // ['first_name' => 'Roman'];
 ```
 
 ## Validation
