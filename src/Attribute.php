@@ -161,7 +161,7 @@ final class Attribute
 
     /**
      * @param array $data
-     * @return mixed
+     * @return \romanzipp\DTO\Values\MissingValue|mixed
      */
     public function extractValueFromData(array $data)
     {
@@ -184,11 +184,6 @@ final class Attribute
         }
 
         return true;
-    }
-
-    public function mustBeInitialized(): bool
-    {
-        return $this->isRequired || ($this->allowsNull);
     }
 
     /*
