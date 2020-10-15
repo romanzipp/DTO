@@ -10,6 +10,12 @@ use romanzipp\DTO\Values\MissingValue;
 
 abstract class AbstractData implements JsonSerializable
 {
+    private const RESERVED_ATTRIBUTES = [
+        'required',
+        'flexible',
+        'attributes',
+    ];
+
     /**
      * Define attributes which must be specified when creating a new data instance.
      *
@@ -129,8 +135,39 @@ abstract class AbstractData implements JsonSerializable
         return array_key_exists($this->getAttribute($key)->name, get_object_vars($this));
     }
 
+    /**
+     * Specify data which should be serialized to JSON.
+     *
+     * @return array|mixed
+     */
     public function jsonSerialize()
     {
         return $this->toArray();
+    }
+
+    /**
+     * Get an array of attributes (includes flexible).
+     *
+     * @param string|null $case
+     * @return array
+     */
+    public function toArray(?string $case = null): array
+    {
+        // $values = array_map(fn(Attribute $attribute) => $this->{$attribute->name}, Attribute::collectFromInstance($this));
+
+        $values = array_filter(
+            get_object_vars($this),
+            static fn(string $key) => ! in_array($key, self::RESERVED_ATTRIBUTES, true),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if ($case === null) {
+            return $values;
+        }
+
+        /** @var \romanzipp\DTO\Strings\AbstractCase $caseFormatter */
+        $caseFormatter = new $case($values);
+
+        return $caseFormatter->format();
     }
 }

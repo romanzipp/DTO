@@ -23,6 +23,21 @@ class ToArrayTest extends TestCase
         ], $data->toArray());
     }
 
+    public function testToArrayFlexible()
+    {
+        $data = new class(['thirdAttribute' => '3']) extends AbstractData {
+            protected static bool $flexible = true;
+            public string $firstAttribute = '1';
+            public string $second_attribute = '2';
+        };
+
+        self::assertSame([
+            'firstAttribute' => '1',
+            'second_attribute' => '2',
+            'thirdAttribute' => '3',
+        ], $data->toArray());
+    }
+
     public function testPascalCase()
     {
         $data = new class extends AbstractData {
