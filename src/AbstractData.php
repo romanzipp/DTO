@@ -3,11 +3,12 @@
 namespace romanzipp\DTO;
 
 use InvalidArgumentException;
+use JsonSerializable;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Exceptions\InvalidDeclarationException;
 use romanzipp\DTO\Values\MissingValue;
 
-abstract class AbstractData
+abstract class AbstractData implements JsonSerializable
 {
     /**
      * Define attributes which must be specified when creating a new data instance.
@@ -126,5 +127,10 @@ abstract class AbstractData
     public function isset(string $key): bool
     {
         return array_key_exists($this->getAttribute($key)->name, get_object_vars($this));
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 }
