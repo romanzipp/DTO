@@ -160,6 +160,19 @@ final class Attribute
     }
 
     /**
+     * @param array $data
+     * @return mixed
+     */
+    public function extractValueFromData(array $data)
+    {
+        if ( ! array_key_exists($this->name, $data)) {
+            return new MissingValue;
+        }
+
+        return $data[$this->name];
+    }
+
+    /**
      * Check if the property has been correctly set up.
      *
      * @return bool

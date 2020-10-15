@@ -10,28 +10,30 @@ abstract class AbstractData
 {
     protected static array $required = [];
 
+    protected array $attributes = [];
+
     public function __construct(array $data = [])
     {
-        $attributes = Attribute::collectFromInstance($this);
+        $this->attributes = Attribute::collectFromInstance($this);
 
         $errors = [];
 
-        foreach ($attributes as $attribute) {
+        foreach ($this->attributes as $attribute) {
 
             if ( ! $attribute->isCorrectlyDeclared()) {
                 throw InvalidDeclarationException::fromAttribute($attribute);
             }
 
-            $value = new MissingValue;
-
-            if (array_key_exists($attribute->name, $data)) {
-                $value = $data[$attribute->name];
-            }
+            $value = $attribute->extractValueFromData($data);
 
             if ( ! $attribute->isValid($value)) {
 
                 $errors[] = $attribute->getError($value);
 
+                continue;
+            }
+
+            if ($value instanceof MissingValue) {
                 continue;
             }
 
