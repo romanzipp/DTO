@@ -163,8 +163,6 @@ abstract class AbstractData implements JsonSerializable
      */
     public function toArray(?string $case = null): array
     {
-        // $values = array_map(fn(Attribute $attribute) => $this->{$attribute->name}, Attribute::collectFromInstance($this));
-
         $values = array_filter(
             get_object_vars($this),
             static fn(string $key) => ! in_array($key, self::RESERVED_ATTRIBUTES, true),
