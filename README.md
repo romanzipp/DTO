@@ -13,6 +13,9 @@ A strongly typed Data Transfer Object without magic for PHP 7.4+
 composer require romanzipp/dto
 ```
 
+- For **PHP 7.4** please use [`1.x`](https://packagist.org/packages/romanzipp/dto#1.0.0)
+- For **PHP 8.0** please use [`2.x`](https://packagist.org/packages/romanzipp/dto#2.0.0) (coming soon)
+
 ## Usage
 
 ```php
@@ -76,6 +79,7 @@ class DummyData extends AbstractData
 $data = new DummyData([
     'firstName' => 'Roman',
 ]);
+
 $data->toArray();                        // ['firstName' => 'Roman'];
 $data->toArray(Cases\CamelCase::class);  // ['firstName' => 'Roman'];
 $data->toArray(Cases\KebabCase::class);  // ['first-name' => 'Roman'];
@@ -122,3 +126,9 @@ $data->toArray(Cases\SnakeCase::class);  // ['first_name' => 'Roman'];
 ```
 ./vendor/bin/phpunit
 ```
+
+## Credits
+
+- [Roman Zipp](https://github.com/romanzipp)
+
+This package has been inspired by [Spaties Data-Transfer-Object](https://github.com/spatie/data-transfer-object) released under the [MIT License](https://github.com/spatie/data-transfer-object/blob/2.5.0/LICENSE.md).
