@@ -3,16 +3,16 @@
 namespace romanzipp\DTO\Exceptions;
 
 use Exception;
-use romanzipp\DTO\Attribute;
+use romanzipp\DTO\Property;
 
 class InvalidDataException extends Exception
 {
-    public static function fromAttribute(Attribute $attribute): self
+    public static function fromProperty(Property $property): self
     {
-        return new self("Invalid attribute");
+        return new self("Invalid property");
     }
 
-    public static function invalidType(Attribute $attribute, $value): self
+    public static function invalidType(Property $property, $value): self
     {
         $type = gettype($value);
 
@@ -20,28 +20,28 @@ class InvalidDataException extends Exception
             $type = get_class($value);
         }
 
-        return new self("The type `{$type}` is not allowed for attribute `{$attribute->name}`");
+        return new self("The type `{$type}` is not allowed for property `{$property->name}`");
     }
 
-    public static function requiredAttributeMissing(Attribute $attribute): self
+    public static function requiredPropertyMissing(Property $property): self
     {
-        return new self("The required attribute `{$attribute->name}` is missing");
+        return new self("The required property `{$property->name}` is missing");
     }
 
-    public static function nullNotAllowed(Attribute $attribute): self
+    public static function nullNotAllowed(Property $property): self
     {
-        return new self("`NULL` is not allowed for attribute `{$attribute->name}`");
+        return new self("`NULL` is not allowed for property `{$property->name}`");
     }
 
     public static function notFlexible(array $keys): self
     {
         if (count($keys) > 0) {
             return new self(
-                sprintf('The provided values `%s` are not declared as attributes', implode('`, `', $keys))
+                sprintf('The provided values `%s` are not declared as properties', implode('`, `', $keys))
             );
         }
 
-        return new self('Some provided values are not declared as attributes');
+        return new self('Some provided values are not declared as properties');
     }
 
     /**

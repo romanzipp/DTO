@@ -3,17 +3,17 @@
 namespace romanzipp\DTO\Tests;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use romanzipp\DTO\Attribute;
+use romanzipp\DTO\Property;
 
 abstract class TestCase extends BaseTestCase
 {
-    protected static function assertValid(Attribute $attribute, $value)
+    protected static function assertValid(Property $property, $value)
     {
-        self::assertTrue($attribute->isValid($value), ($error = $attribute->getError($value)) ? $error->getMessage() : '');
+        self::assertTrue($property->isValid($value), ($error = $property->getError($value)) ? $error->getMessage() : '');
     }
 
-    protected static function assertInvalid(Attribute $attribute, $value)
+    protected static function assertInvalid(Property $property, $value)
     {
-        self::assertFalse($attribute->isValid($value));
+        self::assertFalse($property->isValid($value));
     }
 }

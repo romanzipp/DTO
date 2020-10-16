@@ -10,14 +10,14 @@ use romanzipp\DTO\Values\MissingValue;
 
 abstract class AbstractData implements JsonSerializable
 {
-    private const RESERVED_ATTRIBUTES = [
+    private const RESERVED_PROPERTIES = [
         'required',
         'flexible',
-        'attributes',
+        'properties',
     ];
 
     /**
-     * Define attributes which must be specified when creating a new data instance.
+     * Define properties which must be specified when creating a new data instance.
      *
      * @var array
      */
@@ -31,33 +31,33 @@ abstract class AbstractData implements JsonSerializable
     protected static bool $flexible = false;
 
     /**
-     * The parsed attributes.
+     * The parsed properties.
      *
-     * @var \romanzipp\DTO\Attribute[]
+     * @var \romanzipp\DTO\Property[]
      */
-    protected array $attributes = [];
+    protected array $properties = [];
 
     public function __construct(array $data = [])
     {
-        // Analyse the declared attributes
-        $this->attributes = Attribute::collectFromInstance($this);
+        // Analyse the declared properties
+        $this->properties = Property::collectFromInstance($this);
 
         // Collect errors instead of throwing the first exception to make working with
-        // large sets of attribute less of a hassle
+        // large sets of properties less of a hassle
         $errors = [];
 
-        foreach ($this->attributes as $attribute) {
+        foreach ($this->properties as $property) {
 
-            if ( ! $attribute->isCorrectlyDeclared()) {
-                throw InvalidDeclarationException::fromAttribute($attribute);
+            if ( ! $property->isCorrectlyDeclared()) {
+                throw InvalidDeclarationException::fromProperty($property);
             }
 
-            // Get the attribute value from provided data
-            $value = $attribute->extractValueFromData($data);
+            // Get the property value from provided data
+            $value = $property->extractValueFromData($data);
 
-            if ( ! $attribute->isValid($value)) {
+            if ( ! $property->isValid($value)) {
 
-                $errors[] = $attribute->getError($value);
+                $errors[] = $property->getError($value);
 
                 continue;
             }
@@ -67,24 +67,24 @@ abstract class AbstractData implements JsonSerializable
                 continue;
             }
 
-            $this->{$attribute->name} = $value;
+            $this->{$property->name} = $value;
         }
 
         if ( ! empty($errors)) {
             throw InvalidDataException::any($errors);
         }
 
-        // Calculate keys that are provided but not declared as attributes
-        $diff = array_diff_key($data, $this->attributes);
+        // Calculate keys that are provided but not declared as properties
+        $diff = array_diff_key($data, $this->properties);
 
-        // Fail if there are additional attributes but the instance is not flexible
+        // Fail if there are additional properties but the instance is not flexible
         if (static::isFlexible() === false && count($diff) > 0) {
             throw InvalidDataException::notFlexible(
                 array_keys($diff)
             );
         }
 
-        // Set additional attributes
+        // Set additional properties
         foreach ($diff as $key => $value) {
             $this->{$key} = $value;
         }
@@ -100,7 +100,7 @@ abstract class AbstractData implements JsonSerializable
     }
 
     /**
-     * Get the array of required attributes.
+     * Get the array of required properties.
      *
      * @return array
      */
@@ -110,7 +110,7 @@ abstract class AbstractData implements JsonSerializable
     }
 
     /**
-     * Determine if the dto is flexible and will accept more attributes than declared.
+     * Determine if the dto is flexible and will accept more properties than declared.
      *
      * @return bool
      */
@@ -120,29 +120,29 @@ abstract class AbstractData implements JsonSerializable
     }
 
     /**
-     * Get the attribute instance for a given attribute key.
+     * Get the property instance for a given key.
      *
      * @param string $key
-     * @return \romanzipp\DTO\Attribute
+     * @return \romanzipp\DTO\Property
      */
-    private function getAttribute(string $key): Attribute
+    private function getProperty(string $key): Property
     {
-        if ( ! array_key_exists($key, $this->attributes)) {
-            throw new InvalidArgumentException("Can not access missing data attribute `{$key}`");
+        if ( ! array_key_exists($key, $this->properties)) {
+            throw new InvalidArgumentException("Can not access missing data property `{$key}`");
         }
 
-        return $this->attributes[$key];
+        return $this->properties[$key];
     }
 
     /**
-     * Determine if the attribute has been initialized with a value.
+     * Determine if a property has been initialized with a value.
      *
      * @param string $key
      * @return bool
      */
     public function isset(string $key): bool
     {
-        return array_key_exists($this->getAttribute($key)->name, get_object_vars($this));
+        return array_key_exists($this->getProperty($key)->name, get_object_vars($this));
     }
 
     /**
@@ -156,7 +156,7 @@ abstract class AbstractData implements JsonSerializable
     }
 
     /**
-     * Get an array of attributes (includes flexible).
+     * Get an array of properties (includes flexible).
      *
      * @param string|null $case
      * @return array
@@ -165,7 +165,7 @@ abstract class AbstractData implements JsonSerializable
     {
         $values = array_filter(
             get_object_vars($this),
-            static fn(string $key) => ! in_array($key, self::RESERVED_ATTRIBUTES, true),
+            static fn(string $key) => ! in_array($key, self::RESERVED_PROPERTIES, true),
             ARRAY_FILTER_USE_KEY
         );
 

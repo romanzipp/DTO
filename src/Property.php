@@ -10,7 +10,7 @@ use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Types;
 use romanzipp\DTO\Values\MissingValue;
 
-final class Attribute
+final class Property
 {
     private ReflectionProperty $reflectionProperty;
 
@@ -65,17 +65,17 @@ final class Attribute
     }
 
     /**
-     * Collect all attributes form a given class and optional instance.
+     * Collect all properties form a given class and optional instance.
      *
      * @param string $class
      * @param \romanzipp\DTO\AbstractData|null $data
-     * @return \romanzipp\DTO\Attribute[]
+     * @return \romanzipp\DTO\Property[]
      */
     public static function collect(string $class, ?AbstractData $data = null): array
     {
         $reflectionClass = new ReflectionClass($class);
 
-        $attributes = [];
+        $properties = [];
 
         foreach ($reflectionClass->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
 
@@ -83,15 +83,15 @@ final class Attribute
                 continue;
             }
 
-            $attributes[$property->getName()] = new self($property, $data);
+            $properties[$property->getName()] = new self($property, $data);
         }
 
-        return $attributes;
+        return $properties;
     }
 
     /**
      * @param \romanzipp\DTO\AbstractData $data
-     * @return \romanzipp\DTO\Attribute[]
+     * @return \romanzipp\DTO\Property[]
      */
     public static function collectFromInstance(AbstractData $data): array
     {
@@ -103,7 +103,7 @@ final class Attribute
 
     /**
      * @param string $class
-     * @return \romanzipp\DTO\Attribute[]
+     * @return \romanzipp\DTO\Property[]
      */
     public static function collectFromClass(string $class): array
     {
@@ -111,7 +111,7 @@ final class Attribute
     }
 
     /**
-     * Check if a given value is valid for the current attribute.
+     * Check if a given value is valid for the current property.
      *
      * @param mixed $value
      * @return bool
@@ -130,7 +130,7 @@ final class Attribute
     public function getError($value): ?InvalidDataException
     {
         if ($this->isRequired && $value instanceof MissingValue) {
-            return InvalidDataException::requiredAttributeMissing($this);
+            return InvalidDataException::requiredPropertyMissing($this);
         }
 
         if ($value === null) {
@@ -212,7 +212,7 @@ final class Attribute
     }
 
     /**
-     * Check if the property has been included in the `$required` data attribute.
+     * Check if the property has been included in the `$required` data property.
      *
      * @return bool
      */

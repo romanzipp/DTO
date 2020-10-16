@@ -13,80 +13,80 @@ class ToArrayTest extends TestCase
     public function testToArray()
     {
         $data = new class extends AbstractData {
-            public string $firstAttribute = '1';
-            public string $second_attribute = '2';
+            public string $firstProperty = '1';
+            public string $second_property = '2';
         };
 
         self::assertSame([
-            'firstAttribute' => '1',
-            'second_attribute' => '2',
+            'firstProperty' => '1',
+            'second_property' => '2',
         ], $data->toArray());
     }
 
     public function testToArrayFlexible()
     {
-        $data = new class(['thirdAttribute' => '3']) extends AbstractData {
+        $data = new class(['thirdProperty' => '3']) extends AbstractData {
             protected static bool $flexible = true;
-            public string $firstAttribute = '1';
-            public string $second_attribute = '2';
+            public string $firstProperty = '1';
+            public string $second_property = '2';
         };
 
         self::assertSame([
-            'firstAttribute' => '1',
-            'second_attribute' => '2',
-            'thirdAttribute' => '3',
+            'firstProperty' => '1',
+            'second_property' => '2',
+            'thirdProperty' => '3',
         ], $data->toArray());
     }
 
     public function testPascalCase()
     {
         $data = new class extends AbstractData {
-            public string $firstAttribute = '1';
-            public string $second_attribute = '2';
+            public string $firstProperty = '1';
+            public string $second_property = '2';
         };
 
         self::assertSame([
-            'FirstAttribute' => '1',
-            'SecondAttribute' => '2',
+            'FirstProperty' => '1',
+            'SecondProperty' => '2',
         ], $data->toArray(PascalCase::class));
     }
 
     public function testCamelCase()
     {
         $data = new class extends AbstractData {
-            public string $firstAttribute = '1';
-            public string $second_attribute = '2';
+            public string $firstProperty = '1';
+            public string $second_property = '2';
         };
 
         self::assertSame([
-            'firstAttribute' => '1',
-            'secondAttribute' => '2',
+            'firstProperty' => '1',
+            'secondProperty' => '2',
         ], $data->toArray(CamelCase::class));
     }
 
     public function testSnakeCase()
     {
         $data = new class extends AbstractData {
-            public string $firstAttribute = '1';
-            public string $second_attribute = '2';
+            public string $firstProperty = '1';
+            public string $second_property = '2';
         };
 
         self::assertSame([
-            'first_attribute' => '1',
-            'second_attribute' => '2',
+            'first_property' => '1',
+            'second_property' => '2',
         ], $data->toArray(SnakeCase::class));
     }
 
     public function testKebabCase()
     {
         $data = new class extends AbstractData {
-            public string $firstAttribute = '1';
-            public string $second_attribute = '2';
+            public string $firstProperty = '1';
+            public string $second_property = '2';
         };
 
         self::assertSame([
-            'first-attribute' => '1',
-            'second-attribute' => '2',
+            'first-property' => '1',
+            'second-property' => '2',
         ], $data->toArray(KebabCase::class));
     }
 }

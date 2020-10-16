@@ -2,8 +2,8 @@
 
 namespace romanzipp\DTO\Tests;
 
-use romanzipp\DTO\Attribute;
 use romanzipp\DTO\Exceptions\InvalidDeclarationException;
+use romanzipp\DTO\Property;
 use romanzipp\DTO\Tests\Support\SimpleData;
 use romanzipp\DTO\Tests\Support\SimpleDataNullable;
 use romanzipp\DTO\Tests\Support\SimpleDataNullableDefaultNull;
@@ -18,78 +18,78 @@ class ValidationTest extends TestCase
 {
     public function testSimpleData()
     {
-        $attribute = Attribute::collectFromClass(SimpleData::class)['foo'];
+        $property = Property::collectFromClass(SimpleData::class)['foo'];
 
-        self::assertValid($attribute, '');
-        self::assertValid($attribute, 1);
-        self::assertValid($attribute, null);
-        self::assertValid($attribute, new MissingValue());
+        self::assertValid($property, '');
+        self::assertValid($property, 1);
+        self::assertValid($property, null);
+        self::assertValid($property, new MissingValue());
     }
 
     public function testSimpleDataRequired()
     {
-        $attribute = Attribute::collectFromClass(SimpleDataRequired::class)['foo'];
+        $property = Property::collectFromClass(SimpleDataRequired::class)['foo'];
 
-        self::assertValid($attribute, '');
-        self::assertValid($attribute, 1);
-        self::assertValid($attribute, null);
-        self::assertInvalid($attribute, new MissingValue());
+        self::assertValid($property, '');
+        self::assertValid($property, 1);
+        self::assertValid($property, null);
+        self::assertInvalid($property, new MissingValue());
     }
 
     public function testSimpleDataTypeHinted()
     {
-        $attribute = Attribute::collectFromClass(SimpleDataTypeHinted::class)['foo'];
+        $property = Property::collectFromClass(SimpleDataTypeHinted::class)['foo'];
 
-        self::assertValid($attribute, '');
-        self::assertInvalid($attribute, 1);
-        self::assertInvalid($attribute, null);
-        self::assertValid($attribute, new MissingValue());
+        self::assertValid($property, '');
+        self::assertInvalid($property, 1);
+        self::assertInvalid($property, null);
+        self::assertValid($property, new MissingValue());
     }
 
     public function testSimpleDataTypeHintedRequired()
     {
-        $attribute = Attribute::collectFromClass(SimpleDataTypeHintedRequired::class)['foo'];
+        $property = Property::collectFromClass(SimpleDataTypeHintedRequired::class)['foo'];
 
-        self::assertValid($attribute, '');
-        self::assertInvalid($attribute, 1);
-        self::assertInvalid($attribute, null);
-        self::assertInvalid($attribute, new MissingValue());
+        self::assertValid($property, '');
+        self::assertInvalid($property, 1);
+        self::assertInvalid($property, null);
+        self::assertInvalid($property, new MissingValue());
     }
 
     public function testSimpleDataNullable()
     {
-        $attribute = Attribute::collectFromClass(SimpleDataNullable::class)['foo'];
+        $property = Property::collectFromClass(SimpleDataNullable::class)['foo'];
 
-        self::assertValid($attribute, '');
-        self::assertInvalid($attribute, 1);
-        self::assertValid($attribute, null);
-        self::assertValid($attribute, new MissingValue());
+        self::assertValid($property, '');
+        self::assertInvalid($property, 1);
+        self::assertValid($property, null);
+        self::assertValid($property, new MissingValue());
     }
 
     public function testSimpleDataNullableRequired()
     {
-        $attribute = Attribute::collectFromClass(SimpleDataNullableRequired::class)['foo'];
+        $property = Property::collectFromClass(SimpleDataNullableRequired::class)['foo'];
 
-        self::assertValid($attribute, '');
-        self::assertInvalid($attribute, 1);
-        self::assertValid($attribute, null);
-        self::assertInvalid($attribute, new MissingValue());
+        self::assertValid($property, '');
+        self::assertInvalid($property, 1);
+        self::assertValid($property, null);
+        self::assertInvalid($property, new MissingValue());
     }
 
     public function testSimpleDataNullableDefaultNull()
     {
-        $attribute = Attribute::collectFromClass(SimpleDataNullableDefaultNull::class)['foo'];
+        $property = Property::collectFromClass(SimpleDataNullableDefaultNull::class)['foo'];
 
-        self::assertValid($attribute, '');
-        self::assertInvalid($attribute, 1);
-        self::assertValid($attribute, null);
-        self::assertValid($attribute, new MissingValue());
+        self::assertValid($property, '');
+        self::assertInvalid($property, 1);
+        self::assertValid($property, null);
+        self::assertValid($property, new MissingValue());
     }
 
     public function testSimpleDataNullableDefaultNullRequired()
     {
         $this->expectException(InvalidDeclarationException::class);
 
-        Attribute::collectFromInstance(new SimpleDataNullableDefaultNullRequired())['foo'];
+        Property::collectFromInstance(new SimpleDataNullableDefaultNullRequired())['foo'];
     }
 }
