@@ -2,16 +2,11 @@
 
 namespace romanzipp\DTO\Exceptions;
 
-use Exception;
+use InvalidArgumentException;
 use romanzipp\DTO\Property;
 
-class InvalidDataException extends Exception
+class InvalidDataException extends InvalidArgumentException
 {
-    public static function fromProperty(Property $property): self
-    {
-        return new self("Invalid property");
-    }
-
     public static function invalidType(Property $property, $value): self
     {
         $type = gettype($value);
