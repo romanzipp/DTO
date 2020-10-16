@@ -78,7 +78,7 @@ abstract class AbstractData implements JsonSerializable
         $diff = array_diff_key($data, $this->attributes);
 
         // Fail if there are additional attributes but the instance is not flexible
-        if (static::$flexible === false && count($diff) > 0) {
+        if (static::isFlexible() === false && count($diff) > 0) {
             throw InvalidDataException::notFlexible(
                 array_keys($diff)
             );
@@ -107,6 +107,16 @@ abstract class AbstractData implements JsonSerializable
     public static function getRequired(): array
     {
         return static::$required;
+    }
+
+    /**
+     * Determine if the dto is flexible and will accept more attributes than declared.
+     *
+     * @return bool
+     */
+    public static function isFlexible(): bool
+    {
+        return static::$flexible;
     }
 
     /**
