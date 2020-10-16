@@ -80,11 +80,11 @@ $data = new DummyData([
     'firstName' => 'Roman',
 ]);
 
-$data->toArray();                        // ['firstName' => 'Roman'];
-$data->toArray(Cases\CamelCase::class);  // ['firstName' => 'Roman'];
-$data->toArray(Cases\KebabCase::class);  // ['first-name' => 'Roman'];
-$data->toArray(Cases\PascalCase::class); // ['FirstName' => 'Roman'];
-$data->toArray(Cases\SnakeCase::class);  // ['first_name' => 'Roman'];
+$data->toArray();                                 // ['firstName' => 'Roman'];
+$data->toArrayConverted(Cases\CamelCase::class);  // ['firstName' => 'Roman'];
+$data->toArrayConverted(Cases\KebabCase::class);  // ['first-name' => 'Roman'];
+$data->toArrayConverted(Cases\PascalCase::class); // ['FirstName' => 'Roman'];
+$data->toArrayConverted(Cases\SnakeCase::class);  // ['first_name' => 'Roman'];
 ```
 
 ## Validation

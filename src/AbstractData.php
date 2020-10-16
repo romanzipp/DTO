@@ -4,6 +4,7 @@ namespace romanzipp\DTO;
 
 use InvalidArgumentException;
 use JsonSerializable;
+use romanzipp\DTO\Cases\SnakeCase;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Exceptions\InvalidDeclarationException;
 use romanzipp\DTO\Values\MissingValue;
@@ -158,20 +159,26 @@ abstract class AbstractData implements JsonSerializable
     /**
      * Get an array of properties (includes flexible).
      *
-     * @param string|null $case
      * @return array
      */
-    public function toArray(?string $case = null): array
+    public function toArray(): array
     {
-        $values = array_filter(
+        return array_filter(
             get_object_vars($this),
             static fn(string $key) => ! in_array($key, self::RESERVED_PROPERTIES, true),
             ARRAY_FILTER_USE_KEY
         );
+    }
 
-        if ($case === null) {
-            return $values;
-        }
+    /**
+     * Get an array of properties with converted keys (includes flexible).
+     *
+     * @param string $case
+     * @return array
+     */
+    public function toArrayConverted(string $case = SnakeCase::class): array
+    {
+        $values = $this->toArray();
 
         /** @var \romanzipp\DTO\Cases\AbstractCase $caseFormatter */
         $caseFormatter = new $case($values);
