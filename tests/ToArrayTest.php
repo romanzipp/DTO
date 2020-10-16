@@ -48,7 +48,7 @@ class ToArrayTest extends TestCase
         self::assertSame([
             'FirstProperty' => '1',
             'SecondProperty' => '2',
-        ], $data->toArray(PascalCase::class));
+        ], $data->toArrayConverted(PascalCase::class));
     }
 
     public function testCamelCase()
@@ -61,7 +61,7 @@ class ToArrayTest extends TestCase
         self::assertSame([
             'firstProperty' => '1',
             'secondProperty' => '2',
-        ], $data->toArray(CamelCase::class));
+        ], $data->toArrayConverted(CamelCase::class));
     }
 
     public function testSnakeCase()
@@ -74,7 +74,7 @@ class ToArrayTest extends TestCase
         self::assertSame([
             'first_property' => '1',
             'second_property' => '2',
-        ], $data->toArray(SnakeCase::class));
+        ], $data->toArrayConverted(SnakeCase::class));
     }
 
     public function testKebabCase()
@@ -87,6 +87,6 @@ class ToArrayTest extends TestCase
         self::assertSame([
             'first-property' => '1',
             'second-property' => '2',
-        ], $data->toArray(KebabCase::class));
+        ], $data->toArrayConverted(KebabCase::class));
     }
 }
