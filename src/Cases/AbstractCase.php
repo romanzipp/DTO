@@ -30,6 +30,7 @@ abstract class AbstractCase
      * Convert string to pascal case.
      *
      * @param string $key
+     *
      * @return string
      */
     protected static function toPascalCase(string $key): string
@@ -42,6 +43,7 @@ abstract class AbstractCase
      *
      * @param string $key
      * @param string $delimiter
+     *
      * @return string
      */
     protected static function joinDelimiter(string $key, string $delimiter): string

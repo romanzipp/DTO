@@ -48,7 +48,6 @@ abstract class AbstractData implements JsonSerializable
         $errors = [];
 
         foreach ($this->properties as $property) {
-
             if ( ! $property->isCorrectlyDeclared()) {
                 throw InvalidDeclarationException::fromProperty($property);
             }
@@ -57,7 +56,6 @@ abstract class AbstractData implements JsonSerializable
             $value = $property->extractValueFromData($data);
 
             if ( ! $property->isValid($value)) {
-
                 $errors[] = $property->getError($value);
 
                 continue;
@@ -79,10 +77,8 @@ abstract class AbstractData implements JsonSerializable
         $diff = array_diff_key($data, $this->properties);
 
         // Fail if there are additional properties but the instance is not flexible
-        if (static::isFlexible() === false && count($diff) > 0) {
-            throw InvalidDataException::notFlexible(
-                array_keys($diff)
-            );
+        if (false === static::isFlexible() && count($diff) > 0) {
+            throw InvalidDataException::notFlexible(array_keys($diff));
         }
 
         // Set additional properties
@@ -93,6 +89,7 @@ abstract class AbstractData implements JsonSerializable
 
     /**
      * @param array $data
+     *
      * @return static
      */
     public static function fromArray(array $data = [])
@@ -124,6 +121,7 @@ abstract class AbstractData implements JsonSerializable
      * Get the property instance for a given key.
      *
      * @param string $key
+     *
      * @return \romanzipp\DTO\Property
      */
     private function getProperty(string $key): Property
@@ -139,6 +137,7 @@ abstract class AbstractData implements JsonSerializable
      * Determine if a property has been initialized with a value.
      *
      * @param string $key
+     *
      * @return bool
      */
     public function isset(string $key): bool
@@ -165,7 +164,7 @@ abstract class AbstractData implements JsonSerializable
     {
         return array_filter(
             get_object_vars($this),
-            static fn(string $key) => ! in_array($key, self::RESERVED_PROPERTIES, true),
+            static fn (string $key) => ! in_array($key, self::RESERVED_PROPERTIES, true),
             ARRAY_FILTER_USE_KEY
         );
     }
@@ -174,6 +173,7 @@ abstract class AbstractData implements JsonSerializable
      * Get an array of properties with converted keys (includes flexible).
      *
      * @param string $case
+     *
      * @return array
      */
     public function toArrayConverted(string $case = SnakeCase::class): array

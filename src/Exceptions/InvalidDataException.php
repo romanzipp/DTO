@@ -41,11 +41,12 @@ class InvalidDataException extends InvalidArgumentException
 
     /**
      * @param \romanzipp\DTO\Exceptions\InvalidDataException[] $exceptions
+     *
      * @return static
      */
     public static function any(array $exceptions): self
     {
-        if (count($exceptions) === 1) {
+        if (1 === count($exceptions)) {
             return array_shift($exceptions);
         }
 

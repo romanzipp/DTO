@@ -12,7 +12,7 @@ class ToArrayTest extends TestCase
 {
     public function testToArray()
     {
-        $data = new class extends AbstractData {
+        $data = new class() extends AbstractData {
             public string $firstProperty = '1';
             public string $second_property = '2';
         };
@@ -40,7 +40,7 @@ class ToArrayTest extends TestCase
 
     public function testPascalCase()
     {
-        $data = new class extends AbstractData {
+        $data = new class() extends AbstractData {
             public string $firstProperty = '1';
             public string $second_property = '2';
         };
@@ -53,7 +53,7 @@ class ToArrayTest extends TestCase
 
     public function testCamelCase()
     {
-        $data = new class extends AbstractData {
+        $data = new class() extends AbstractData {
             public string $firstProperty = '1';
             public string $second_property = '2';
         };
@@ -66,7 +66,7 @@ class ToArrayTest extends TestCase
 
     public function testSnakeCase()
     {
-        $data = new class extends AbstractData {
+        $data = new class() extends AbstractData {
             public string $firstProperty = '1';
             public string $second_property = '2';
         };
@@ -79,7 +79,7 @@ class ToArrayTest extends TestCase
 
     public function testKebabCase()
     {
-        $data = new class extends AbstractData {
+        $data = new class() extends AbstractData {
             public string $firstProperty = '1';
             public string $second_property = '2';
         };
