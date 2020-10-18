@@ -20,10 +20,7 @@ class FlexibleValuesTest extends TestCase
     {
         $this->expectException(InvalidDataException::class);
 
-        new class([
-            'foo' => 'bar',
-            'bar' => 'foo',
-        ]) extends AbstractData {
+        new class(['foo' => 'bar', 'bar' => 'foo']) extends AbstractData {
             protected static bool $flexible = false;
         };
     }
@@ -39,10 +36,7 @@ class FlexibleValuesTest extends TestCase
 
     public function testOverloadingWithExisting()
     {
-        $data = new class([
-            'foo' => 'bar',
-            'bar' => 'foo',
-        ]) extends AbstractData {
+        $data = new class(['foo' => 'bar', 'bar' => 'foo']) extends AbstractData {
             protected static bool $flexible = true;
             public string $bar;
         };

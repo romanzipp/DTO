@@ -52,7 +52,7 @@ class ValuesTest extends TestCase
 
     public function testClosureValues()
     {
-        $data = new class(['callback' => fn() => null]) extends AbstractData {
+        $data = new class(['callback' => fn () => null]) extends AbstractData {
             public Closure $callback;
         };
 
@@ -61,7 +61,7 @@ class ValuesTest extends TestCase
 
     public function testObjectValues()
     {
-        $object = new class {
+        $object = new class() {
         };
 
         $data = new class(['object' => $object]) extends AbstractData {

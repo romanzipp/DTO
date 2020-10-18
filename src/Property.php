@@ -7,7 +7,6 @@ use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionType;
 use romanzipp\DTO\Exceptions\InvalidDataException;
-use romanzipp\DTO\Types;
 use romanzipp\DTO\Values\MissingValue;
 
 final class Property
@@ -44,7 +43,7 @@ final class Property
         $this->allowsNull = $this->checkAllowsNull();
         $this->isRequired = $this->checkIsRequired();
 
-        if ($data !== null) {
+        if (null !== $data) {
             $this->isInitialized = $this->checkIsInitialized($data);
         }
 
@@ -57,6 +56,7 @@ final class Property
      *
      * @param \ReflectionProperty $reflectionProperty
      * @param \romanzipp\DTO\AbstractData $data
+     *
      * @return static
      */
     public static function make(ReflectionProperty $reflectionProperty, AbstractData $data): self
@@ -69,6 +69,7 @@ final class Property
      *
      * @param string $class
      * @param \romanzipp\DTO\AbstractData|null $data
+     *
      * @return \romanzipp\DTO\Property[]
      */
     public static function collect(string $class, ?AbstractData $data = null): array
@@ -78,7 +79,6 @@ final class Property
         $properties = [];
 
         foreach ($reflectionClass->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
-
             if ($property->isStatic()) {
                 continue;
             }
@@ -91,6 +91,7 @@ final class Property
 
     /**
      * @param \romanzipp\DTO\AbstractData $data
+     *
      * @return \romanzipp\DTO\Property[]
      */
     public static function collectFromInstance(AbstractData $data): array
@@ -103,6 +104,7 @@ final class Property
 
     /**
      * @param string $class
+     *
      * @return \romanzipp\DTO\Property[]
      */
     public static function collectFromClass(string $class): array
@@ -114,17 +116,19 @@ final class Property
      * Check if a given value is valid for the current property.
      *
      * @param mixed $value
+     *
      * @return bool
      */
     public function isValid($value): bool
     {
-        return $this->getError($value) === null;
+        return null === $this->getError($value);
     }
 
     /**
      * Get the validation error for a given value.
      *
      * @param mixed $value
+     *
      * @return \romanzipp\DTO\Exceptions\InvalidDataException|null
      */
     public function getError($value): ?InvalidDataException
@@ -133,8 +137,7 @@ final class Property
             return InvalidDataException::requiredPropertyMissing($this);
         }
 
-        if ($value === null) {
-
+        if (null === $value) {
             if ( ! $this->allowsNull) {
                 return InvalidDataException::nullNotAllowed($this);
             }
@@ -151,7 +154,6 @@ final class Property
         }
 
         foreach ($this->allowedTypes as $type) {
-
             if ( ! $type->isValid($value)) {
                 continue;
             }
@@ -164,12 +166,13 @@ final class Property
 
     /**
      * @param array $data
+     *
      * @return \romanzipp\DTO\Values\MissingValue|mixed
      */
     public function extractValueFromData(array $data)
     {
         if ( ! array_key_exists($this->name, $data)) {
-            return new MissingValue;
+            return new MissingValue();
         }
 
         return $data[$this->name];
@@ -208,7 +211,7 @@ final class Property
      */
     private function checkHasType(): bool
     {
-        return $this->reflectionProperty->hasType() === true;
+        return true === $this->reflectionProperty->hasType();
     }
 
     /**
@@ -230,6 +233,7 @@ final class Property
      * This also returns true if a property has been declared with a default value.
      *
      * @param \romanzipp\DTO\AbstractData $data
+     *
      * @return bool
      */
     private function checkIsInitialized(AbstractData $data): bool
@@ -252,7 +256,7 @@ final class Property
     }
 
     /**
-     * NOTE: This method also returns true of the property is nullable `?`
+     * NOTE: This method also returns true of the property is nullable `?`.
      *
      * @return bool
      */

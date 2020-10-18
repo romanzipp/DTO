@@ -16,7 +16,7 @@ class ClassInheritanceTest extends TestCase
 {
     public function testClass()
     {
-        $data = new class(['object' => new TestClass]) extends AbstractData {
+        $data = new class(['object' => new TestClass()]) extends AbstractData {
             public TestClass $object;
         };
 
@@ -27,14 +27,14 @@ class ClassInheritanceTest extends TestCase
     {
         $this->expectException(InvalidDataException::class);
 
-        $data = new class(['object' => new TestClassOther]) extends AbstractData {
+        $data = new class(['object' => new TestClassOther()]) extends AbstractData {
             public TestClass $object;
         };
     }
 
     public function testInterface()
     {
-        $data = new class(['object' => new TestClassImplementsInterface]) extends AbstractData {
+        $data = new class(['object' => new TestClassImplementsInterface()]) extends AbstractData {
             public TestInterface $object;
         };
 
@@ -43,7 +43,7 @@ class ClassInheritanceTest extends TestCase
 
     public function testInterfaceExtendedByClass()
     {
-        $data = new class(['object' => new TestClassImplementsInterfaceExtends]) extends AbstractData {
+        $data = new class(['object' => new TestClassImplementsInterfaceExtends()]) extends AbstractData {
             public TestInterface $object;
         };
 
@@ -61,7 +61,7 @@ class ClassInheritanceTest extends TestCase
 
     public function testAbstractClass()
     {
-        $data = new class(['object' => new TestClassExtendsAbstractClass]) extends AbstractData {
+        $data = new class(['object' => new TestClassExtendsAbstractClass()]) extends AbstractData {
             public TestAbstractClass $object;
         };
 
