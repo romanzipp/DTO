@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace romanzipp\DTO\Cases;
 
 class PascalCase extends AbstractCase
