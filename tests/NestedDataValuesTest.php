@@ -10,7 +10,7 @@ use romanzipp\DTO\Tests\Support\NestedData;
 
 class NestedDataValuesTest extends TestCase
 {
-    public function testBasic()
+    public function testNestedDataRespectsRecursiveKeys()
     {
         $data = new NestedData([
             'childData' => new NestedData([

@@ -115,7 +115,6 @@ class ValuesTest extends TestCase
         $data = new SimpleDataTypeHinted([]);
 
         self::assertFalse($data->isset('foo'));
-        // self::assertSame('bar', $data->foo);
 
         $data = new SimpleDataTypeHinted([
             'foo' => 'bar',
@@ -140,7 +139,6 @@ class ValuesTest extends TestCase
         $data = new SimpleDataNullable([]);
 
         self::assertFalse($data->isset('foo'));
-        // self::assertSame(null, $data->foo);
 
         $data = new SimpleDataNullable([
             'foo' => null,
