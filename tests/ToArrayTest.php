@@ -38,7 +38,19 @@ class ToArrayTest extends TestCase
         ], $data->toArray());
     }
 
-    public function testPascalCase()
+    public function testFilteredStaticProperties()
+    {
+        $data = new class([]) extends AbstractData {
+            protected static string $staticProperty = '1';
+            public string $scopedProperty = '2';
+        };
+
+        self::assertSame([
+            'scopedProperty' => '2',
+        ], $data->toArray());
+    }
+
+    public function testConvertedPascalCase()
     {
         $data = new class() extends AbstractData {
             public string $firstProperty = '1';
@@ -51,7 +63,7 @@ class ToArrayTest extends TestCase
         ], $data->toArrayConverted(PascalCase::class));
     }
 
-    public function testCamelCase()
+    public function testConvertedCamelCase()
     {
         $data = new class() extends AbstractData {
             public string $firstProperty = '1';
@@ -64,7 +76,7 @@ class ToArrayTest extends TestCase
         ], $data->toArrayConverted(CamelCase::class));
     }
 
-    public function testSnakeCase()
+    public function testConvertedSnakeCase()
     {
         $data = new class() extends AbstractData {
             public string $firstProperty = '1';
@@ -77,7 +89,7 @@ class ToArrayTest extends TestCase
         ], $data->toArrayConverted(SnakeCase::class));
     }
 
-    public function testKebabCase()
+    public function testConvertedKebabCase()
     {
         $data = new class() extends AbstractData {
             public string $firstProperty = '1';
