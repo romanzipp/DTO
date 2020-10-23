@@ -4,6 +4,7 @@ namespace romanzipp\DTO\Tests;
 
 use Closure;
 use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Tests\Support\SimpleData;
 use romanzipp\DTO\Tests\Support\SimpleDataNullable;
 use romanzipp\DTO\Tests\Support\SimpleDataNullableDefaultNull;
@@ -32,6 +33,15 @@ class ValuesTest extends TestCase
         self::assertSame(true, $data->bool);
     }
 
+    public function testBooleanValuesMustBeStrict()
+    {
+        $this->expectException(InvalidDataException::class);
+
+        new class(['bool' => 1]) extends AbstractData {
+            public bool $bool;
+        };
+    }
+
     public function testIntValues()
     {
         $data = new class(['int' => 1]) extends AbstractData {
@@ -41,6 +51,15 @@ class ValuesTest extends TestCase
         self::assertSame(1, $data->int);
     }
 
+    public function testIntValuesMustBeStrict()
+    {
+        $this->expectException(InvalidDataException::class);
+
+        new class(['int' => '1']) extends AbstractData {
+            public int $int;
+        };
+    }
+
     public function testFloatValues()
     {
         $data = new class(['float' => 1.0]) extends AbstractData {
@@ -48,6 +67,15 @@ class ValuesTest extends TestCase
         };
 
         self::assertSame(1.0, $data->float);
+    }
+
+    public function testFloatValuesMustBeStrict()
+    {
+        $this->expectException(InvalidDataException::class);
+
+        new class(['float' => '1.0']) extends AbstractData {
+            public float $float;
+        };
     }
 
     public function testClosureValues()
