@@ -2,6 +2,7 @@
 
 namespace romanzipp\DTO\Tests;
 
+use InvalidArgumentException;
 use romanzipp\DTO\AbstractData;
 use romanzipp\DTO\Cases\CamelCase;
 use romanzipp\DTO\Cases\KebabCase;
@@ -100,5 +101,21 @@ class ToArrayTest extends TestCase
             'first-property' => '1',
             'second-property' => '2',
         ], $data->toArrayConverted(KebabCase::class));
+    }
+
+    public function testConvertedInvalidClassName()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The given case formatter `romanzipp\DTO\Tests\ToArrayTest` is invalid');
+
+        $data = new class() extends AbstractData {
+            public string $firstProperty = '1';
+            public string $second_property = '2';
+        };
+
+        self::assertSame([
+            'first-property' => '1',
+            'second-property' => '2',
+        ], $data->toArrayConverted(self::class));
     }
 }

@@ -180,6 +180,10 @@ abstract class AbstractData implements JsonSerializable
     {
         $values = $this->toArray();
 
+        if ( ! is_subclass_of($case, AbstractCase::class)) {
+            throw new InvalidArgumentException("The given case formatter `{$case}` is invalid");
+        }
+
         /** @var \romanzipp\DTO\Cases\AbstractCase $caseFormatter */
         $caseFormatter = new $case($values);
 
