@@ -3,6 +3,7 @@
 namespace romanzipp\DTO;
 
 use ReflectionClass;
+use ReflectionException;
 use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionType;
@@ -74,9 +75,13 @@ final class Property
      */
     public static function collect(string $class, ?AbstractData $data = null): array
     {
-        $reflectionClass = new ReflectionClass($class);
-
         $properties = [];
+
+        try {
+            $reflectionClass = new ReflectionClass($class);
+        } catch (ReflectionException $exception) {
+            return $properties;
+        }
 
         foreach ($reflectionClass->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
             if ($property->isStatic()) {

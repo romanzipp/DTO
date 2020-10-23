@@ -90,6 +90,8 @@ abstract class AbstractData implements JsonSerializable
     }
 
     /**
+     * Create an instance from given data array.
+     *
      * @param array $data
      *
      * @return static
@@ -154,7 +156,7 @@ abstract class AbstractData implements JsonSerializable
      */
     public function getValues(): array
     {
-        return  array_filter(
+        return array_filter(
             get_object_vars($this),
             static fn (string $key) => ! in_array($key, self::RESERVED_PROPERTIES, true),
             ARRAY_FILTER_USE_KEY
