@@ -2,8 +2,10 @@
 
 namespace romanzipp\DTO;
 
+use Closure;
 use InvalidArgumentException;
 use JsonSerializable;
+use romanzipp\DTO\Cases\AbstractCase;
 use romanzipp\DTO\Cases\SnakeCase;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Exceptions\InvalidDeclarationException;
@@ -146,6 +148,20 @@ abstract class AbstractData implements JsonSerializable
     }
 
     /**
+     * Get public values.
+     *
+     * @return array
+     */
+    public function getValues(): array
+    {
+        return  array_filter(
+            get_object_vars($this),
+            static fn (string $key) => ! in_array($key, self::RESERVED_PROPERTIES, true),
+            ARRAY_FILTER_USE_KEY
+        );
+    }
+
+    /**
      * Specify data which should be serialized to JSON.
      *
      * @return array|mixed
@@ -162,11 +178,7 @@ abstract class AbstractData implements JsonSerializable
      */
     public function toArray(): array
     {
-        return array_filter(
-            get_object_vars($this),
-            static fn (string $key) => ! in_array($key, self::RESERVED_PROPERTIES, true),
-            ARRAY_FILTER_USE_KEY
-        );
+        return $this->walkValuesDataCallback(fn (self $value) => $value->toArray());
     }
 
     /**
@@ -178,7 +190,7 @@ abstract class AbstractData implements JsonSerializable
      */
     public function toArrayConverted(string $case = SnakeCase::class): array
     {
-        $values = $this->toArray();
+        $values = $this->walkValuesDataCallback(fn (self $value) => $value->toArrayConverted($case));
 
         if ( ! is_subclass_of($case, AbstractCase::class)) {
             throw new InvalidArgumentException("The given case formatter `{$case}` is invalid");
@@ -188,5 +200,27 @@ abstract class AbstractData implements JsonSerializable
         $caseFormatter = new $case($values);
 
         return $caseFormatter->format();
+    }
+
+    /**
+     * Iterate over instance values with a given callback applied to DTO instances.
+     *
+     * @param \Closure $callback
+     *
+     * @return array
+     */
+    private function walkValuesDataCallback(Closure $callback): array
+    {
+        return array_map(static function ($value) use ($callback) {
+            if ($value instanceof self) {
+                return $callback($value);
+            }
+
+            if ($value instanceof JsonSerializable) {
+                return $value->jsonSerialize();
+            }
+
+            return $value;
+        }, $this->getValues());
     }
 }
