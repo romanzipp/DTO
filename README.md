@@ -7,6 +7,12 @@
 
 A strongly typed Data Transfer Object without magic for PHP 7.4+
 
+## Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Validation table](#validation)
+
 ## Installation
 
 ```
@@ -45,7 +51,82 @@ $data = new DummyData([
 ]);
 ```
 
+### Require properties
+
+When declaring required properties, the DTO will validate all parameters against the declared properties. Take a look at the [validation table](#validation) for more details.
+
+```php
+use romanzipp\DTO\AbstractData;
+
+class DummyData extends AbstractData
+{
+    protected static array $required = [
+        'name',
+    ];
+
+    public string $name;
+}
+
+$data = new DummyData([]);
+```
+
+> romanzipp\DTO\Exceptions\InvalidDataException: The required property \`name\` is missing
+
+### Array methods
+
+#### Simple array representation
+
+To get an array representation of the DTO, simply call the `toArray` instance method.
+
+When transferring the DTO properties to an array format, the package will respect and call any `toArray` methods of nested DTO instances or otherwise fall back to any declared [`jsonSerialize`](https://www.php.net/manual/de/jsonserializable.jsonserialize.php) method when implementing the [`JsonSerializable`](https://www.php.net/manual/de/class.jsonserializable.php) interface.
+
+```php
+use romanzipp\DTO\AbstractData;
+
+class DummyData extends AbstractData
+{
+    public string $firstName;
+
+    public DummyData $childData;
+}
+
+$data = new DummyData([
+    'firstName' => 'Roman',
+    'childData' => new DummyData([
+        'firstName' => 'Tim',
+    ])
+]);
+
+$data->toArray(); // ['firstName' => 'Roman', 'childData' => ['firstName' => 'Tim']];
+```
+
+#### Convert keys
+
+The `toArrayConverted` method allows the simple conversion of property keys to a given case.
+
+```php
+use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Cases;
+
+class DummyData extends AbstractData
+{
+    public string $firstName;
+}
+
+$data = new DummyData([
+    'firstName' => 'Roman',
+]);
+
+$data->toArrayConverted(Cases\CamelCase::class);  // ['firstName' => 'Roman'];
+$data->toArrayConverted(Cases\KebabCase::class);  // ['first-name' => 'Roman'];
+$data->toArrayConverted(Cases\PascalCase::class); // ['FirstName' => 'Roman'];
+$data->toArrayConverted(Cases\SnakeCase::class);  // ['first_name' => 'Roman'];
+```
+
 ### Flexible DTOs
+
+When setting the static `$flexible` property to `true` you can provide more parameters than declared in the DTO instance.
+All properties will also be included in the `toArray` methods. This would otherwise throw an [`InvalidDataException`](src/Exceptions/InvalidDataException.php).
 
 ```php
 use romanzipp\DTO\AbstractData;
@@ -63,28 +144,6 @@ $data = new DummyData([
 ]);
 
 $data->toArray(); // ['name' => 'Roman', 'website' => 'ich.wtf];
-```
-
-### Case Formatter
-
-```php
-use romanzipp\DTO\AbstractData;
-use romanzipp\DTO\Cases;
-
-class DummyData extends AbstractData
-{
-    public string $firstName;
-}
-
-$data = new DummyData([
-    'firstName' => 'Roman',
-]);
-
-$data->toArray();                                 // ['firstName' => 'Roman'];
-$data->toArrayConverted(Cases\CamelCase::class);  // ['firstName' => 'Roman'];
-$data->toArrayConverted(Cases\KebabCase::class);  // ['first-name' => 'Roman'];
-$data->toArrayConverted(Cases\PascalCase::class); // ['FirstName' => 'Roman'];
-$data->toArrayConverted(Cases\SnakeCase::class);  // ['first_name' => 'Roman'];
 ```
 
 ## Validation
