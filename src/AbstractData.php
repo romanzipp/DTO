@@ -176,6 +176,18 @@ abstract class AbstractData implements JsonSerializable
     }
 
     /**
+     * Get a string of json formatted values.
+     *
+     * @throws \JsonException
+     *
+     * @return string
+     */
+    public function toJson(): string
+    {
+        return json_encode($this, JSON_THROW_ON_ERROR);
+    }
+
+    /**
      * Get an array of properties (includes flexible).
      *
      * @return array
