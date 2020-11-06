@@ -35,23 +35,16 @@ abstract class AbstractData implements JsonSerializable
      */
     protected static bool $flexible = false;
 
-    /**
-     * The parsed properties.
-     *
-     * @var \romanzipp\DTO\Property[]
-     */
-    protected array $properties = [];
-
     public function __construct(array $data = [])
     {
         // Analyse the declared properties
-        $this->properties = Property::collectFromInstance($this);
+        $properties = Property::collectFromInstance($this);
 
         // Collect errors instead of throwing the first exception to make working with
         // large sets of properties less of a hassle
         $errors = [];
 
-        foreach ($this->properties as $property) {
+        foreach ($properties as $property) {
             if ( ! $property->isCorrectlyDeclared()) {
                 throw InvalidDeclarationException::fromProperty($property);
             }
@@ -78,7 +71,7 @@ abstract class AbstractData implements JsonSerializable
         }
 
         // Calculate keys that are provided but not declared as properties
-        $diff = array_diff_key($data, $this->properties);
+        $diff = array_diff_key($data, $properties);
 
         // Fail if there are additional properties but the instance is not flexible
         if (false === static::isFlexible() && count($diff) > 0) {
@@ -132,11 +125,7 @@ abstract class AbstractData implements JsonSerializable
      */
     private function getProperty(string $key): Property
     {
-        if ( ! array_key_exists($key, $this->properties)) {
-            throw new InvalidArgumentException("Can not access missing data property `{$key}`");
-        }
-
-        return $this->properties[$key];
+        return Property::fromKey($key, $this);
     }
 
     /**

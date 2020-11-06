@@ -97,6 +97,19 @@ final class Property
     }
 
     /**
+     * Create an instance from a given data instance and property key.
+     *
+     * @param string $key
+     * @param \romanzipp\DTO\AbstractData $data
+     *
+     * @return $this
+     */
+    public static function fromKey(string $key, AbstractData $data): self
+    {
+        return new self(new ReflectionProperty($data, $key), $data);
+    }
+
+    /**
      * @param \romanzipp\DTO\AbstractData $data
      *
      * @return \romanzipp\DTO\Property[]
