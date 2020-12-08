@@ -100,7 +100,7 @@ class ValuesTest extends TestCase
         self::assertIsObject($data->object);
     }
 
-    public function testSimpleData()
+    public function testValues()
     {
         $data = new SimpleData([]);
 
@@ -122,7 +122,7 @@ class ValuesTest extends TestCase
         self::assertSame('bar', $data->foo);
     }
 
-    public function testSimpleDataRequired()
+    public function testValuesRequired()
     {
         $data = new SimpleDataRequired([
             'foo' => null,
@@ -139,7 +139,7 @@ class ValuesTest extends TestCase
         self::assertSame('bar', $data->foo);
     }
 
-    public function testSimpleDataTypeHinted()
+    public function testValuesTypeHinted()
     {
         $data = new SimpleDataTypeHinted([]);
 
@@ -153,7 +153,7 @@ class ValuesTest extends TestCase
         self::assertSame('bar', $data->foo);
     }
 
-    public function testSimpleDataTypeHintedRequired()
+    public function testValuesTypeHintedRequired()
     {
         $data = new SimpleDataTypeHintedRequired([
             'foo' => 'bar',
@@ -163,7 +163,7 @@ class ValuesTest extends TestCase
         self::assertSame('bar', $data->foo);
     }
 
-    public function testSimpleDataTyoeUnion()
+    public function testValuesTyoeUnion()
     {
         $data = new SimpleDataTypeUnion([
             'foo' => 'bar',
@@ -180,7 +180,7 @@ class ValuesTest extends TestCase
         self::assertSame(1, $data->foo);
     }
 
-    public function testSimpleDataNullable()
+    public function testValuesNullable()
     {
         $data = new SimpleDataNullable([]);
 
@@ -201,7 +201,7 @@ class ValuesTest extends TestCase
         self::assertSame('bar', $data->foo);
     }
 
-    public function testSimpleDataNullableRequired()
+    public function testValuesNullableRequired()
     {
         $data = new SimpleDataNullableRequired([
             'foo' => null,
@@ -218,7 +218,7 @@ class ValuesTest extends TestCase
         self::assertSame('bar', $data->foo);
     }
 
-    public function testSimpleDataNullableDefaultNull()
+    public function testValuesNullableDefaultNull()
     {
         $data = new SimpleDataNullableDefaultNull([]);
 
