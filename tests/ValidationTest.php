@@ -16,7 +16,7 @@ use romanzipp\DTO\Values\MissingValue;
 
 class ValidationTest extends TestCase
 {
-    public function testSimpleData()
+    public function testValidation()
     {
         $property = Property::collectFromClass(SimpleData::class)['foo'];
 
@@ -26,7 +26,7 @@ class ValidationTest extends TestCase
         self::assertValid($property, new MissingValue());
     }
 
-    public function testSimpleDataRequired()
+    public function testValidationRequired()
     {
         $property = Property::collectFromClass(SimpleDataRequired::class)['foo'];
 
@@ -36,7 +36,7 @@ class ValidationTest extends TestCase
         self::assertInvalid($property, new MissingValue());
     }
 
-    public function testSimpleDataTypeHinted()
+    public function testValidationTypeHinted()
     {
         $property = Property::collectFromClass(SimpleDataTypeHinted::class)['foo'];
 
@@ -46,7 +46,7 @@ class ValidationTest extends TestCase
         self::assertValid($property, new MissingValue());
     }
 
-    public function testSimpleDataTypeHintedRequired()
+    public function testValidationTypeHintedRequired()
     {
         $property = Property::collectFromClass(SimpleDataTypeHintedRequired::class)['foo'];
 
@@ -56,7 +56,7 @@ class ValidationTest extends TestCase
         self::assertInvalid($property, new MissingValue());
     }
 
-    public function testSimpleDataNullable()
+    public function testValidationNullable()
     {
         $property = Property::collectFromClass(SimpleDataNullable::class)['foo'];
 
@@ -66,7 +66,7 @@ class ValidationTest extends TestCase
         self::assertValid($property, new MissingValue());
     }
 
-    public function testSimpleDataNullableRequired()
+    public function testValidationNullableRequired()
     {
         $property = Property::collectFromClass(SimpleDataNullableRequired::class)['foo'];
 
@@ -76,7 +76,7 @@ class ValidationTest extends TestCase
         self::assertInvalid($property, new MissingValue());
     }
 
-    public function testSimpleDataNullableDefaultNull()
+    public function testValidationNullableDefaultNull()
     {
         $property = Property::collectFromClass(SimpleDataNullableDefaultNull::class)['foo'];
 
@@ -86,7 +86,7 @@ class ValidationTest extends TestCase
         self::assertValid($property, new MissingValue());
     }
 
-    public function testSimpleDataNullableDefaultNullRequired()
+    public function testValidationNullableDefaultNullRequired()
     {
         $this->expectException(InvalidDeclarationException::class);
 
