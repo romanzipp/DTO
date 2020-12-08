@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/packagist/l/romanzipp/DTO.svg?style=flat-square)](https://packagist.org/packages/romanzipp/dto)
 [![GitHub Build Status](https://img.shields.io/github/workflow/status/romanzipp/DTO/Tests?style=flat-square)](https://github.com/romanzipp/DTO/actions)
 
-A strongly typed Data Transfer Object without magic for PHP 7.4+
+A strongly typed **Data Transfer Object** without magic for PHP 8.0+ . Features support for PHP 8 [union types](https://wiki.php.net/rfc/union_types_v2) and [attributes](https://wiki.php.net/rfc/attributes_v2).
 
 ## Contents
 
@@ -20,25 +20,22 @@ composer require romanzipp/dto
 ```
 
 - For **PHP 7.4** please use [`1.x`](https://packagist.org/packages/romanzipp/dto#1.0.0)
-- For **PHP 8.0** please use [`2.x`](https://packagist.org/packages/romanzipp/dto#2.0.0) (coming soon)
+- For **PHP 8.0** please use [`2.x`](https://packagist.org/packages/romanzipp/dto#2.0.0)
 
 ## Usage
 
 ```php
 use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Attributes\Required;
 
 class DummyData extends AbstractData
 {
-    protected static array $required = [
-        'name',
-        'stuff',
-    ];
-
+    #[Required]
     public string $name;
 
     public ?string $nickname;
 
-    public $stuff;
+    public string|int $height;
 
     public DateTime $birthday;
 
@@ -47,7 +44,7 @@ class DummyData extends AbstractData
 
 $data = new DummyData([
     'name' => 'Roman',
-    'stuff' => [],
+    'height' => 180,
 ]);
 ```
 
@@ -57,13 +54,11 @@ When declaring required properties, the DTO will validate all parameters against
 
 ```php
 use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Attributes\Required;
 
 class DummyData extends AbstractData
 {
-    protected static array $required = [
-        'name',
-    ];
-
+    #[Required]
     public string $name;
 }
 
@@ -125,16 +120,16 @@ $data->toArrayConverted(Cases\SnakeCase::class);  // ['first_name' => 'Roman'];
 
 ### Flexible DTOs
 
-When setting the static `$flexible` property to `true` you can provide more parameters than declared in the DTO instance.
+When attaching the `Flexible` attribute you can provide more parameters than declared in the DTO instance.
 All properties will also be included in the `toArray` methods. This would otherwise throw an [`InvalidDataException`](src/Exceptions/InvalidDataException.php).
 
 ```php
 use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Attributes\Flexible;
 
+#[Flexible]
 class DummyData extends AbstractData
 {
-    protected static bool $flexible = true;
-
     public string $name;
 }
 
