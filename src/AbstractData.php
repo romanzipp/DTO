@@ -83,7 +83,7 @@ abstract class AbstractData implements JsonSerializable
      *
      * @return static
      */
-    public static function fromArray(array $data = [])
+    public static function fromArray(array $data = []): static
     {
         return new static($data);
     }
@@ -139,9 +139,9 @@ abstract class AbstractData implements JsonSerializable
     /**
      * Specify data which should be serialized to JSON.
      *
-     * @return array|mixed
+     * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }
