@@ -243,13 +243,7 @@ final class Property
      */
     private function checkIsRequired(): bool
     {
-        foreach ($this->reflectionProperty->getAttributes() as $attribute) {
-            if ($attribute->getName() === Attributes\Required::class) {
-                return true;
-            }
-        }
-
-        return false;
+        return ! empty($this->reflectionProperty->getAttributes(Attributes\Required::class));
     }
 
     /**
