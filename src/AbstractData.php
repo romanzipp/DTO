@@ -16,17 +16,9 @@ use romanzipp\DTO\Values\MissingValue;
 abstract class AbstractData implements JsonSerializable
 {
     private const RESERVED_PROPERTIES = [
-        'required',
         'flexible',
         'properties',
     ];
-
-    /**
-     * Define properties which must be specified when creating a new data instance.
-     *
-     * @var array
-     */
-    protected static array $required = [];
 
     /**
      * Define weather you can pass other values other than defined.
@@ -94,16 +86,6 @@ abstract class AbstractData implements JsonSerializable
     public static function fromArray(array $data = [])
     {
         return new static($data);
-    }
-
-    /**
-     * Get the array of required properties.
-     *
-     * @return array
-     */
-    public static function getRequired(): array
-    {
-        return static::$required;
     }
 
     /**

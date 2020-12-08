@@ -9,6 +9,7 @@ use ReflectionException;
 use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionType;
+use romanzipp\DTO\Attributes;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Values\MissingValue;
 
@@ -241,11 +242,13 @@ final class Property
      */
     private function checkIsRequired(): bool
     {
-        return in_array(
-            $this->reflectionProperty->getName(),
-            $this->data ? $this->data::getRequired() : $this->reflectionProperty->class::getRequired(),
-            true
-        );
+        foreach ($this->reflectionProperty->getAttributes() as $attribute) {
+            if ($attribute->getName() === Attributes\Required::class) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

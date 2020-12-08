@@ -3,12 +3,10 @@
 namespace romanzipp\DTO\Tests\Support;
 
 use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Attributes\Required;
 
 class SimpleDataNullableDefaultNullRequired extends AbstractData
 {
-    protected static array  $required = [
-        'foo',
-    ];
-
+    #[Required]
     public ?string $foo = null;
 }
