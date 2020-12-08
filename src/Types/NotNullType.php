@@ -6,7 +6,7 @@ namespace romanzipp\DTO\Types;
 
 class NotNullType implements Type
 {
-    public function isValid($value): bool
+    public function isValid(mixed $value): bool
     {
         return null !== $value;
     }

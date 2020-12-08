@@ -83,7 +83,7 @@ final class Property
 
         try {
             $reflectionClass = new ReflectionClass($class);
-        } catch (ReflectionException $exception) {
+        } catch (ReflectionException) {
             return $properties;
         }
 
@@ -141,7 +141,7 @@ final class Property
      *
      * @return bool
      */
-    public function isValid($value): bool
+    public function isValid(mixed $value): bool
     {
         return null === $this->getError($value);
     }
@@ -153,7 +153,7 @@ final class Property
      *
      * @return \romanzipp\DTO\Exceptions\InvalidDataException|null
      */
-    public function getError($value): ?InvalidDataException
+    public function getError(mixed $value): ?InvalidDataException
     {
         if ($this->isRequired && $value instanceof MissingValue) {
             return InvalidDataException::requiredPropertyMissing($this);
@@ -189,9 +189,9 @@ final class Property
     /**
      * @param array $data
      *
-     * @return \romanzipp\DTO\Values\MissingValue|mixed
+     * @return mixed
      */
-    public function extractValueFromData(array $data)
+    public function extractValueFromData(array $data): mixed
     {
         if ( ! array_key_exists($this->name, $data)) {
             return new MissingValue();

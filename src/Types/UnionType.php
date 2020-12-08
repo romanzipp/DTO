@@ -16,7 +16,7 @@ class UnionType implements Type
         $this->type = $type;
     }
 
-    public function isValid($value): bool
+    public function isValid(mixed $value): bool
     {
         $types = array_map(static fn (ReflectionNamedType $type) => new NamedReflectedType($type), $this->type->getTypes());
 

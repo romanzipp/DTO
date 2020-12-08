@@ -26,7 +26,7 @@ class NamedReflectedType implements Type
         $this->type = $type;
     }
 
-    public function isValid($value): bool
+    public function isValid(mixed $value): bool
     {
         $name = $this->type->getName();
 
