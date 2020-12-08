@@ -163,7 +163,7 @@ class ValuesTest extends TestCase
         self::assertSame('bar', $data->foo);
     }
 
-    public function testValuesTyoeUnion()
+    public function testValuesTypeUnion()
     {
         $data = new SimpleDataTypeUnion([
             'foo' => 'bar',

@@ -12,6 +12,8 @@ use romanzipp\DTO\Tests\Support\SimpleDataNullableRequired;
 use romanzipp\DTO\Tests\Support\SimpleDataRequired;
 use romanzipp\DTO\Tests\Support\SimpleDataTypeHinted;
 use romanzipp\DTO\Tests\Support\SimpleDataTypeHintedRequired;
+use romanzipp\DTO\Tests\Support\SimpleDataTypeUnion;
+use romanzipp\DTO\Tests\Support\SimpleDataTypeUnionRequired;
 use romanzipp\DTO\Values\MissingValue;
 
 class ValidationTest extends TestCase
@@ -52,6 +54,28 @@ class ValidationTest extends TestCase
 
         self::assertValid($property, '');
         self::assertInvalid($property, 1);
+        self::assertInvalid($property, null);
+        self::assertInvalid($property, new MissingValue());
+    }
+
+    public function testValidationTypeHintedUnion()
+    {
+        $property = Property::collectFromClass(SimpleDataTypeUnion::class)['foo'];
+
+        self::assertValid($property, '');
+        self::assertValid($property, 'bar');
+        self::assertValid($property, 1);
+        self::assertInvalid($property, null);
+        self::assertValid($property, new MissingValue());
+    }
+
+    public function testValidationTypeHintedUnionRequired()
+    {
+        $property = Property::collectFromClass(SimpleDataTypeUnionRequired::class)['foo'];
+
+        self::assertValid($property, '');
+        self::assertValid($property, 'bar');
+        self::assertValid($property, 1);
         self::assertInvalid($property, null);
         self::assertInvalid($property, new MissingValue());
     }
