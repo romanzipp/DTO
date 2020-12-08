@@ -19,8 +19,8 @@ A strongly typed **Data Transfer Object** without magic for PHP 8.0+ . Features 
 composer require romanzipp/dto
 ```
 
-- For **PHP 7.4** please use [`1.x`](https://packagist.org/packages/romanzipp/dto#1.0.0)
-- For **PHP 8.0** please use [`2.x`](https://packagist.org/packages/romanzipp/dto#2.0.0)
+- For **PHP 7.4** please use [`1.x`](https://github.com/romanzipp/DTO/tree/1.x)
+- For **PHP 8.0** please use [`2.x`](https://github.com/romanzipp/DTO)
 
 ## Usage
 
