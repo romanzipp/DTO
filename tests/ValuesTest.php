@@ -12,6 +12,7 @@ use romanzipp\DTO\Tests\Support\SimpleDataNullableRequired;
 use romanzipp\DTO\Tests\Support\SimpleDataRequired;
 use romanzipp\DTO\Tests\Support\SimpleDataTypeHinted;
 use romanzipp\DTO\Tests\Support\SimpleDataTypeHintedRequired;
+use romanzipp\DTO\Tests\Support\SimpleDataTypeUnion;
 
 class ValuesTest extends TestCase
 {
@@ -160,6 +161,23 @@ class ValuesTest extends TestCase
 
         self::assertTrue($data->isset('foo'));
         self::assertSame('bar', $data->foo);
+    }
+
+    public function testSimpleDataTyoeUnion()
+    {
+        $data = new SimpleDataTypeUnion([
+            'foo' => 'bar',
+        ]);
+
+        self::assertTrue($data->isset('foo'));
+        self::assertSame('bar', $data->foo);
+
+        $data = new SimpleDataTypeUnion([
+            'foo' => 1,
+        ]);
+
+        self::assertTrue($data->isset('foo'));
+        self::assertSame(1, $data->foo);
     }
 
     public function testSimpleDataNullable()
