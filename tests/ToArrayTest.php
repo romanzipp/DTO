@@ -4,6 +4,7 @@ namespace romanzipp\DTO\Tests;
 
 use InvalidArgumentException;
 use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Attributes\Flexible;
 use romanzipp\DTO\Cases\CamelCase;
 use romanzipp\DTO\Cases\KebabCase;
 use romanzipp\DTO\Cases\PascalCase;
@@ -26,8 +27,7 @@ class ToArrayTest extends TestCase
 
     public function testToArrayFlexible()
     {
-        $data = new class(['thirdProperty' => '3']) extends AbstractData {
-            protected static bool $flexible = true;
+        $data = new #[Flexible] class(['thirdProperty' => '3']) extends AbstractData {
             public string $firstProperty = '1';
             public string $second_property = '2';
         };

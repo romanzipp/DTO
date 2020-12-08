@@ -7,6 +7,8 @@ namespace romanzipp\DTO;
 use Closure;
 use InvalidArgumentException;
 use JsonSerializable;
+use ReflectionClass;
+use romanzipp\DTO\Attributes\Flexible;
 use romanzipp\DTO\Cases\AbstractCase;
 use romanzipp\DTO\Cases\SnakeCase;
 use romanzipp\DTO\Exceptions\InvalidDataException;
@@ -15,18 +17,6 @@ use romanzipp\DTO\Values\MissingValue;
 
 abstract class AbstractData implements JsonSerializable
 {
-    private const RESERVED_PROPERTIES = [
-        'flexible',
-        'properties',
-    ];
-
-    /**
-     * Define weather you can pass other values other than defined.
-     *
-     * @var bool
-     */
-    protected static bool $flexible = false;
-
     public function __construct(array $data = [])
     {
         // Analyse the declared properties
@@ -95,7 +85,9 @@ abstract class AbstractData implements JsonSerializable
      */
     public static function isFlexible(): bool
     {
-        return static::$flexible;
+        return ! empty(
+            (new ReflectionClass(static::class))->getAttributes(Flexible::class)
+        );
     }
 
     /**
@@ -129,11 +121,7 @@ abstract class AbstractData implements JsonSerializable
      */
     public function getValues(): array
     {
-        return array_filter(
-            get_object_vars($this),
-            static fn (string $key) => ! in_array($key, self::RESERVED_PROPERTIES, true),
-            ARRAY_FILTER_USE_KEY
-        );
+        return get_object_vars($this);
     }
 
     /**
