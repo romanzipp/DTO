@@ -16,7 +16,7 @@ A strongly typed Data Transfer Object without magic for PHP 7.4+
 ## Installation
 
 ```
-composer require romanzipp/dto
+composer require romanzipp/dto:^1.0
 ```
 
 - For **PHP 7.4** please use [`1.x`](https://github.com/romanzipp/DTO/tree/1.x)
