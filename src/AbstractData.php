@@ -224,6 +224,14 @@ abstract class AbstractData implements JsonSerializable
                 return $value->jsonSerialize();
             }
 
+            if (is_array($value)) {
+                foreach ($value as $key => $item) {
+                    if ($item instanceof JsonSerializable) {
+                        $value[$key] = $item->jsonSerialize();
+                    }
+                }
+            }
+
             return $value;
         }, $this->getValues());
     }
