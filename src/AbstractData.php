@@ -186,7 +186,7 @@ abstract class AbstractData implements JsonSerializable
      */
     private function walkValuesDataCallback(Closure $callback): array
     {
-        return array_map(static function ($value) use ($callback) {
+        $serializeItem = static function ($value, Closure $callback) {
             if ($value instanceof self) {
                 return $callback($value);
             }
@@ -196,6 +196,16 @@ abstract class AbstractData implements JsonSerializable
             }
 
             return $value;
+        };
+
+        return array_map(static function ($value) use ($callback, $serializeItem) {
+            if (is_array($value)) {
+                foreach ($value as $key => $item) {
+                    $value[$key] = $serializeItem($item, $callback);
+                }
+            }
+
+            return $serializeItem($value, $callback);
         }, $this->getValues());
     }
 }
