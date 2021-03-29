@@ -83,16 +83,31 @@ class DummyData extends AbstractData
     public string $firstName;
 
     public DummyData $childData;
+    
+    /** @var self[] */
+    public array $children = [];
 }
 
 $data = new DummyData([
     'firstName' => 'Roman',
     'childData' => new DummyData([
         'firstName' => 'Tim',
-    ])
+     ]),
+    'children' => [
+        new DummyData([
+            'firstName' => 'Tom'
+        ]),
+    ],
 ]);
 
-$data->toArray(); // ['firstName' => 'Roman', 'childData' => ['firstName' => 'Tim']];
+$data->toArray();
+// [
+//    'firstName' => 'Roman',
+//    'childData' => ['firstName' => 'Tim']
+//    'children' => [
+//        ['firstName' => 'Tom']
+//    ] 
+// ];
 ```
 
 #### Convert keys

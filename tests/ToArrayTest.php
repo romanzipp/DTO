@@ -39,6 +39,43 @@ class ToArrayTest extends TestCase
         ], $data->toArray());
     }
 
+    public function testToArrayNestedObjectsInArray()
+    {
+        $data = new class(['children' => [new class(['text' => 'foo']) extends AbstractData {
+            public string $text;
+        }]]) extends AbstractData {
+            public array $children = [];
+        };
+
+        self::assertSame(['children' => [['text' => 'foo']]], $data->toArray());
+    }
+
+    public function testToArrayNestedObjectsInArrayDeep()
+    {
+        $data = new class(['children' => [new class(['children' => [new class(['text' => 'foo']) extends AbstractData {
+            public string $text;
+        }]]) extends AbstractData {
+            public array $children = [];
+        }]]) extends AbstractData {
+            public array $children = [];
+        };
+
+        self::assertSame(['children' => [['children' => [['text' => 'foo']]]]], $data->toArray());
+    }
+
+    public function testToArrayNestedObjectsInArrayDeepConvertedKeyCase()
+    {
+        $data = new class(['more_children' => [new class(['someChildren' => [new class(['text' => 'foo']) extends AbstractData {
+            public string $text;
+        }]]) extends AbstractData {
+            public array $someChildren = [];
+        }]]) extends AbstractData {
+            public array $more_children = [];
+        };
+
+        self::assertSame(['more_children' => [['some_children' => [['text' => 'foo']]]]], $data->toArrayConverted(SnakeCase::class));
+    }
+
     public function testFilteredStaticProperties()
     {
         $data = new class([]) extends AbstractData {
