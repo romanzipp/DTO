@@ -110,7 +110,9 @@ $data->toArray();
 // [
 //    'firstName' => 'Roman',
 //    'childData' => ['firstName' => 'Tim']
-//    'children' => [ ['firstName' => 'Tom'] ] 
+//    'children' => [
+//        ['firstName' => 'Tom']
+//    ] 
 // ];
 ```
 
