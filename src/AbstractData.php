@@ -18,7 +18,6 @@ abstract class AbstractData implements JsonSerializable
     private const RESERVED_PROPERTIES = [
         'required',
         'flexible',
-        'properties',
     ];
 
     /**
