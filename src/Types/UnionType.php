@@ -21,7 +21,7 @@ class UnionType implements Type
         $types = array_map(static fn (ReflectionNamedType $type) => new NamedReflectedType($type), $this->type->getTypes());
 
         foreach ($types as $type) {
-            if ($type->isValid($value)){
+            if ($type->isValid($value)) {
                 return true;
             }
         }

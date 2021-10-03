@@ -8,5 +8,4 @@ use romanzipp\DTO\Attributes\Flexible;
 #[Flexible]
 class FlexibleData extends AbstractData
 {
-
 }
