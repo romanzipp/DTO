@@ -23,7 +23,7 @@ abstract class AbstractData implements JsonSerializable
     /**
      * Define properties which must be specified when creating a new data instance.
      *
-     * @var array
+     * @var string[]
      */
     protected static array $required = [];
 
@@ -34,7 +34,10 @@ abstract class AbstractData implements JsonSerializable
      */
     protected static bool $flexible = false;
 
-    public function __construct(array $data = [])
+    /**
+     * @param array<string, mixed> $data
+     */
+    final public function __construct(array $data = [])
     {
         // Analyse the declared properties
         $properties = Property::collectFromInstance($this);
@@ -86,7 +89,7 @@ abstract class AbstractData implements JsonSerializable
     /**
      * Create an instance from given data array.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return static
      */
@@ -98,7 +101,7 @@ abstract class AbstractData implements JsonSerializable
     /**
      * Get the array of required properties.
      *
-     * @return array
+     * @return string[]
      */
     public static function getRequired(): array
     {
@@ -142,7 +145,7 @@ abstract class AbstractData implements JsonSerializable
     /**
      * Get public values.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getValues(): array
     {
@@ -156,7 +159,7 @@ abstract class AbstractData implements JsonSerializable
     /**
      * Specify data which should be serialized to JSON.
      *
-     * @return array|mixed
+     * @return array<string, mixed>|mixed
      */
     public function jsonSerialize()
     {
@@ -178,7 +181,7 @@ abstract class AbstractData implements JsonSerializable
     /**
      * Get an array of properties (includes flexible).
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
@@ -190,7 +193,7 @@ abstract class AbstractData implements JsonSerializable
      *
      * @param string $case
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayConverted(string $case = SnakeCase::class): array
     {
@@ -211,7 +214,7 @@ abstract class AbstractData implements JsonSerializable
      *
      * @param \Closure $callback
      *
-     * @return array
+     * @return array<string, mixed>
      */
     private function walkValuesDataCallback(Closure $callback): array
     {

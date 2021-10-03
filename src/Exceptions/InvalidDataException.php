@@ -9,6 +9,12 @@ use romanzipp\DTO\Property;
 
 class InvalidDataException extends InvalidArgumentException
 {
+    /**
+     * @param \romanzipp\DTO\Property $property
+     * @param mixed $value
+     *
+     * @return self
+     */
     public static function invalidType(Property $property, $value): self
     {
         $type = gettype($value);
@@ -30,6 +36,11 @@ class InvalidDataException extends InvalidArgumentException
         return new self("`NULL` is not allowed for property `{$property->name}`");
     }
 
+    /**
+     * @param string[] $keys
+     *
+     * @return self
+     */
     public static function notFlexible(array $keys): self
     {
         if (count($keys) > 0) {
@@ -44,7 +55,7 @@ class InvalidDataException extends InvalidArgumentException
     /**
      * @param \romanzipp\DTO\Exceptions\InvalidDataException[] $exceptions
      *
-     * @return static
+     * @return self
      */
     public static function any(array $exceptions): self
     {

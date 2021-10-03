@@ -6,8 +6,14 @@ namespace romanzipp\DTO\Cases;
 
 abstract class AbstractCase
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $values;
 
+    /**
+     * @param array<string, mixed> $values
+     */
     public function __construct(array $values)
     {
         $this->values = $values;
@@ -16,7 +22,7 @@ abstract class AbstractCase
     /**
      * Convert all keys and return the array.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function format(): array
     {
@@ -58,5 +64,10 @@ abstract class AbstractCase
         return $key;
     }
 
+    /**
+     * @param string[] $keys
+     *
+     * @return string[]
+     */
     abstract protected function formatKeys(array $keys): array;
 }
