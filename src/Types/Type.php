@@ -9,7 +9,7 @@ interface Type
     /**
      * Check if the given value is valid.
      *
-     * @param $value
+     * @param mixed $value
      *
      * @return bool
      */

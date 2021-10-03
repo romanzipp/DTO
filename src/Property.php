@@ -185,7 +185,7 @@ final class Property
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \romanzipp\DTO\Values\MissingValue|mixed
      */
@@ -288,15 +288,13 @@ final class Property
     /**
      * Get all allowed types.
      *
-     * @return array
+     * @return \romanzipp\DTO\Types\Type[]
      */
     private function checkAllowedTypes(): array
     {
         if ( ! $type = $this->reflectionProperty->getType()) {
             return [];
         }
-
-        // TODO: Implement \ReflectionUnionType for PHP 8.0+
 
         if ($type instanceof ReflectionNamedType) {
             return [
