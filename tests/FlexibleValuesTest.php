@@ -20,26 +20,31 @@ class FlexibleValuesTest extends TestCase
     {
         $this->expectException(InvalidDataException::class);
 
-        new class(['foo' => 'bar']) extends AbstractData {};
+        new class(['foo' => 'bar']) extends AbstractData {
+        };
     }
 
     public function testNotFlexibleFailingMultiple()
     {
         $this->expectException(InvalidDataException::class);
 
-        new class(['foo' => 'bar', 'bar' => 'foo']) extends AbstractData {};
+        new class(['foo' => 'bar', 'bar' => 'foo']) extends AbstractData {
+        };
     }
 
     public function testOverloading()
     {
-        $data = new #[Flexible] class(['foo' => 'bar']) extends AbstractData {};
+        $data = new #[Flexible] class(['foo' => 'bar']) extends AbstractData
+        {
+        };
 
         self::assertSame('bar', $data->foo);
     }
 
     public function testOverloadingWithExisting()
     {
-        $data = new #[Flexible] class(['foo' => 'bar', 'bar' => 'foo']) extends AbstractData {
+        $data = new #[Flexible] class(['foo' => 'bar', 'bar' => 'foo']) extends AbstractData
+        {
             public string $bar;
         };
 

@@ -10,7 +10,6 @@ use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionType;
 use ReflectionUnionType;
-use romanzipp\DTO\Attributes;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Values\MissingValue;
 
@@ -187,7 +186,7 @@ final class Property
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return mixed
      */
@@ -286,7 +285,7 @@ final class Property
     /**
      * Get all allowed types.
      *
-     * @return array
+     * @return \romanzipp\DTO\Types\Type[]
      */
     private function checkAllowedTypes(): array
     {
@@ -296,7 +295,7 @@ final class Property
 
         if ($type instanceof ReflectionUnionType) {
             return [
-                new Types\UnionType($type)
+                new Types\UnionType($type),
             ];
         }
 
