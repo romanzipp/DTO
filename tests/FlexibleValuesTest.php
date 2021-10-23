@@ -34,8 +34,7 @@ class FlexibleValuesTest extends TestCase
 
     public function testOverloading()
     {
-        $data = new #[Flexible] class(['foo' => 'bar']) extends AbstractData
-        {
+        $data = new #[Flexible] class(['foo' => 'bar']) extends AbstractData {
         };
 
         self::assertSame('bar', $data->foo);
@@ -43,8 +42,7 @@ class FlexibleValuesTest extends TestCase
 
     public function testOverloadingWithExisting()
     {
-        $data = new #[Flexible] class(['foo' => 'bar', 'bar' => 'foo']) extends AbstractData
-        {
+        $data = new #[Flexible] class(['foo' => 'bar', 'bar' => 'foo']) extends AbstractData {
             public string $bar;
         };
 
