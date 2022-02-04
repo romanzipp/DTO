@@ -47,8 +47,8 @@ final class Property
         $this->allowsNull = $this->checkAllowsNull();
         $this->isRequired = $this->checkIsRequired();
 
-        if (null !== $data) {
-            $this->isInitialized = $this->checkIsInitialized($data);
+        if (null !== $this->data) {
+            $this->isInitialized = $this->checkIsInitialized($this->data);
         }
 
         $this->hasDefaultValue = $this->checkHasDefaultValue();
