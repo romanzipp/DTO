@@ -27,8 +27,7 @@ class ToArrayTest extends TestCase
 
     public function testToArrayFlexible()
     {
-        $data = new #[Flexible] class(['thirdProperty' => '3']) extends AbstractData
-        {
+        $data = new #[Flexible] class(['thirdProperty' => '3']) extends AbstractData {
             public string $firstProperty = '1';
             public string $second_property = '2';
         };
