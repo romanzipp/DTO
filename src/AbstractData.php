@@ -37,7 +37,7 @@ abstract class AbstractData implements JsonSerializable
     /**
      * @param array<string, mixed> $data
      */
-    final public function __construct(array $data = [])
+    public function __construct(array $data = [])
     {
         // Analyse the declared properties
         $properties = Property::collectFromInstance($this);
