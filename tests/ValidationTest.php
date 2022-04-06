@@ -2,6 +2,9 @@
 
 namespace romanzipp\DTO\Tests;
 
+use romanzipp\DTO\AbstractData;
+use romanzipp\DTO\Attributes\Required;
+use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Exceptions\InvalidDeclarationException;
 use romanzipp\DTO\Property;
 use romanzipp\DTO\Tests\Support\SimpleData;
@@ -135,5 +138,45 @@ class ValidationTest extends TestCase
         $this->expectException(InvalidDeclarationException::class);
 
         Property::collectFromInstance(new SimpleDataNullableDefaultNullRequired())['foo'];
+    }
+
+    public function testExceptionPropertiesSet()
+    {
+        try {
+            new class(['int' => null]) extends AbstractData {
+                #[Required]
+                public int $int;
+            };
+
+            self::fail();
+        } catch (InvalidDataException $exception) {
+            self::assertCount(1, $exception->getProperties());
+            self::assertSame('int', $exception->getProperties()[0]->name);
+        }
+
+        try {
+            new class(['int' => '1']) extends AbstractData {
+                public int $int;
+            };
+
+            self::fail();
+        } catch (InvalidDataException $exception) {
+            self::assertCount(1, $exception->getProperties());
+            self::assertSame('int', $exception->getProperties()[0]->name);
+        }
+
+        try {
+            new class([]) extends AbstractData {
+                #[Required]
+                public int $foo;
+
+                #[Required]
+                public int $bar;
+            };
+
+            self::fail();
+        } catch (InvalidDataException $exception) {
+            self::assertCount(2, $exception->getProperties());
+        }
     }
 }
