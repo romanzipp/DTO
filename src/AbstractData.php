@@ -11,9 +11,10 @@ use romanzipp\DTO\Cases\AbstractCase;
 use romanzipp\DTO\Cases\SnakeCase;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Exceptions\InvalidDeclarationException;
+use romanzipp\DTO\Interfaces\AbstractDataInterface;
 use romanzipp\DTO\Values\MissingValue;
 
-abstract class AbstractData implements JsonSerializable
+abstract class AbstractData implements AbstractDataInterface, JsonSerializable
 {
     private const RESERVED_PROPERTIES = [
         'required',
