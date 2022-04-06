@@ -28,7 +28,7 @@ class InvalidDataException extends InvalidArgumentException
             $type = get_class($value);
         }
 
-        $exception = new self("The type `{$type}` is not allowed for property `{$property->name}`");
+        $exception = new self("The type `{$type}` is not allowed for property `{$property->getName()}`");
         $exception->setProperties([$property]);
 
         return $exception;
@@ -36,7 +36,7 @@ class InvalidDataException extends InvalidArgumentException
 
     public static function requiredPropertyMissing(Property $property): self
     {
-        $exception = new self("The required property `{$property->name}` is missing");
+        $exception = new self("The required property `{$property->getName()}` is missing");
         $exception->setProperties([$property]);
 
         return $exception;
@@ -44,7 +44,7 @@ class InvalidDataException extends InvalidArgumentException
 
     public static function nullNotAllowed(Property $property): self
     {
-        $exception = new self("`NULL` is not allowed for property `{$property->name}`");
+        $exception = new self("`NULL` is not allowed for property `{$property->getName()}`");
         $exception->setProperties([$property]);
 
         return $exception;

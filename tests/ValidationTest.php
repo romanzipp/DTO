@@ -151,7 +151,7 @@ class ValidationTest extends TestCase
             self::fail();
         } catch (InvalidDataException $exception) {
             self::assertCount(1, $exception->getProperties());
-            self::assertSame('int', $exception->getProperties()[0]->name);
+            self::assertSame('int', $exception->getProperties()[0]->getName());
         }
 
         try {
@@ -162,7 +162,7 @@ class ValidationTest extends TestCase
             self::fail();
         } catch (InvalidDataException $exception) {
             self::assertCount(1, $exception->getProperties());
-            self::assertSame('int', $exception->getProperties()[0]->name);
+            self::assertSame('int', $exception->getProperties()[0]->getName());
         }
 
         try {
