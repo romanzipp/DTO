@@ -49,7 +49,7 @@ abstract class AbstractData implements AbstractDataInterface, JsonSerializable
                 continue;
             }
 
-            $this->{$property->name} = $value;
+            $this->{$property->getName()} = $value;
         }
 
         if ( ! empty($errors)) {
@@ -115,7 +115,7 @@ abstract class AbstractData implements AbstractDataInterface, JsonSerializable
      */
     public function isset(string $key): bool
     {
-        return array_key_exists($this->getProperty($key)->name, get_object_vars($this));
+        return array_key_exists($this->getProperty($key)->getName(), get_object_vars($this));
     }
 
     /**
