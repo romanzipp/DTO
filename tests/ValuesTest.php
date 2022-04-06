@@ -221,4 +221,45 @@ class ValuesTest extends TestCase
         self::assertTrue($data->isset('foo'));
         self::assertSame('bar', $data->foo);
     }
+
+    public function testExceptionPropertiesSet()
+    {
+        try {
+            new class(['int' => null]) extends AbstractData {
+                protected static array $required = ['int'];
+
+                public int $int;
+            };
+
+            self::fail();
+        } catch (InvalidDataException $exception) {
+            self::assertCount(1, $exception->getProperties());
+            self::assertSame('int', $exception->getProperties()[0]->getName());
+        }
+
+        try {
+            new class(['int' => '1']) extends AbstractData {
+                public int $int;
+            };
+
+            self::fail();
+        } catch (InvalidDataException $exception) {
+            self::assertCount(1, $exception->getProperties());
+            self::assertSame('int', $exception->getProperties()[0]->getName());
+        }
+
+        try {
+            new class([]) extends AbstractData {
+                protected static array $required = ['foo', 'bar'];
+
+                public int $foo;
+
+                public int $bar;
+            };
+
+            self::fail();
+        } catch (InvalidDataException $exception) {
+            self::assertCount(2, $exception->getProperties());
+        }
+    }
 }

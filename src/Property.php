@@ -18,17 +18,17 @@ final class Property
 
     private ?AbstractData $data;
 
-    public string $name;
+    private string $name;
 
-    public bool $hasType;
+    private bool $hasType;
 
-    public bool $isRequired;
+    private bool $isRequired;
 
-    public bool $isInitialized;
+    private bool $isInitialized;
 
-    public bool $allowsNull;
+    private bool $allowsNull;
 
-    public bool $hasDefaultValue;
+    private bool $hasDefaultValue;
 
     /**
      * @var \romanzipp\DTO\Types\Type[]
@@ -206,6 +206,36 @@ final class Property
     public function isCorrectlyDeclared(): bool
     {
         return ! ($this->hasType && $this->allowsNull && $this->isInitialized && $this->isRequired);
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function hasType(): bool
+    {
+        return $this->hasType;
+    }
+
+    public function isRequired(): bool
+    {
+        return $this->isRequired;
+    }
+
+    public function isInitialized(): bool
+    {
+        return $this->isInitialized;
+    }
+
+    public function allowsNull(): bool
+    {
+        return $this->allowsNull;
+    }
+
+    public function hasDefaultValue(): bool
+    {
+        return $this->hasDefaultValue;
     }
 
     /*
