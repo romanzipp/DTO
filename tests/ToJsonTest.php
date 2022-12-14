@@ -3,7 +3,6 @@
 namespace romanzipp\DTO\Tests;
 
 use romanzipp\DTO\AbstractData;
-use stdClass;
 
 class ToJsonTest extends TestCase
 {
@@ -19,7 +18,7 @@ class ToJsonTest extends TestCase
     public function testToJsonObject()
     {
         $data = new class(['foo' => (object) ['foo' => 'bar']]) extends AbstractData {
-            public stdClass $foo;
+            public \stdClass $foo;
         };
 
         self::assertEquals('{"foo":{"foo":"bar"}}', $data->toJson());

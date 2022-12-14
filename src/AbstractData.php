@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace romanzipp\DTO;
 
-use Closure;
-use InvalidArgumentException;
-use JsonSerializable;
-use ReflectionClass;
 use romanzipp\DTO\Attributes\Flexible;
 use romanzipp\DTO\Cases\AbstractCase;
 use romanzipp\DTO\Cases\SnakeCase;
@@ -16,7 +12,7 @@ use romanzipp\DTO\Exceptions\InvalidDeclarationException;
 use romanzipp\DTO\Interfaces\AbstractDataInterface;
 use romanzipp\DTO\Values\MissingValue;
 
-abstract class AbstractData implements AbstractDataInterface, JsonSerializable
+abstract class AbstractData implements AbstractDataInterface, \JsonSerializable
 {
     /**
      * @param array<string, mixed> $data
@@ -90,7 +86,7 @@ abstract class AbstractData implements AbstractDataInterface, JsonSerializable
     public static function isFlexible(): bool
     {
         return ! empty(
-            (new ReflectionClass(static::class))->getAttributes(Flexible::class)
+            (new \ReflectionClass(static::class))->getAttributes(Flexible::class)
         );
     }
 
@@ -172,7 +168,7 @@ abstract class AbstractData implements AbstractDataInterface, JsonSerializable
         $values = $this->walkValuesDataCallback(fn (self $value) => $value->toArrayConverted($case));
 
         if ( ! is_subclass_of($case, AbstractCase::class)) {
-            throw new InvalidArgumentException("The given case formatter `{$case}` is invalid");
+            throw new \InvalidArgumentException("The given case formatter `{$case}` is invalid");
         }
 
         /** @var \romanzipp\DTO\Cases\AbstractCase $caseFormatter */
@@ -188,14 +184,14 @@ abstract class AbstractData implements AbstractDataInterface, JsonSerializable
      *
      * @return array<string, mixed>
      */
-    private function walkValuesDataCallback(Closure $callback): array
+    private function walkValuesDataCallback(\Closure $callback): array
     {
-        $serializeItem = static function ($value, Closure $callback) {
+        $serializeItem = static function ($value, \Closure $callback) {
             if ($value instanceof self) {
                 return $callback($value);
             }
 
-            if ($value instanceof JsonSerializable) {
+            if ($value instanceof \JsonSerializable) {
                 return $value->jsonSerialize();
             }
 

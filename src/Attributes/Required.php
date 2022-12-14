@@ -4,7 +4,7 @@ namespace romanzipp\DTO\Attributes;
 
 use Attribute;
 
-#[Attribute]
+#[\Attribute]
 class Required
 {
 }

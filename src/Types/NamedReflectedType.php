@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace romanzipp\DTO\Types;
 
-use ReflectionNamedType;
-
 class NamedReflectedType implements Type
 {
     /**
@@ -19,9 +17,9 @@ class NamedReflectedType implements Type
         'int' => 'integer',
     ];
 
-    private ReflectionNamedType $type;
+    private \ReflectionNamedType $type;
 
-    public function __construct(ReflectionNamedType $type)
+    public function __construct(\ReflectionNamedType $type)
     {
         $this->type = $type;
     }

@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace romanzipp\DTO\Exceptions;
 
 use romanzipp\DTO\Property;
-use RuntimeException;
 
-class InvalidDeclarationException extends RuntimeException
+class InvalidDeclarationException extends \RuntimeException
 {
     public static function fromProperty(Property $property): self
     {

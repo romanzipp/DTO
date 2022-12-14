@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace romanzipp\DTO\Exceptions;
 
-use InvalidArgumentException;
 use romanzipp\DTO\Property;
 
-class InvalidDataException extends InvalidArgumentException
+class InvalidDataException extends \InvalidArgumentException
 {
     /**
      * @var \romanzipp\DTO\Property[]

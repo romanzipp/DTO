@@ -2,7 +2,6 @@
 
 namespace romanzipp\DTO\Tests;
 
-use Closure;
 use romanzipp\DTO\AbstractData;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Tests\Support\SimpleData;
@@ -82,7 +81,7 @@ class ValuesTest extends TestCase
     public function testClosureValues()
     {
         $data = new class(['callback' => fn () => null]) extends AbstractData {
-            public Closure $callback;
+            public \Closure $callback;
         };
 
         self::assertIsCallable($data->callback);

@@ -2,7 +2,6 @@
 
 namespace romanzipp\DTO\Tests;
 
-use InvalidArgumentException;
 use romanzipp\DTO\AbstractData;
 use romanzipp\DTO\Attributes\Flexible;
 use romanzipp\DTO\Cases\CamelCase;
@@ -142,7 +141,7 @@ class ToArrayTest extends TestCase
 
     public function testConvertedInvalidClassName()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The given case formatter `romanzipp\DTO\Tests\ToArrayTest` is invalid');
 
         $data = new class() extends AbstractData {

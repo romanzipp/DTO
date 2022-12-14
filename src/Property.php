@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace romanzipp\DTO;
 
-use ReflectionClass;
 use ReflectionException;
-use ReflectionNamedType;
-use ReflectionProperty;
-use ReflectionType;
-use ReflectionUnionType;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Values\MissingValue;
 
 final class Property
 {
-    private ReflectionProperty $reflectionProperty;
+    private \ReflectionProperty $reflectionProperty;
 
     private ?AbstractData $data;
 
@@ -36,7 +31,7 @@ final class Property
      */
     public array $allowedTypes;
 
-    public function __construct(ReflectionProperty $reflectionProperty, ?AbstractData $data = null)
+    public function __construct(\ReflectionProperty $reflectionProperty, ?AbstractData $data = null)
     {
         $this->reflectionProperty = $reflectionProperty;
         $this->data = $data;
@@ -63,7 +58,7 @@ final class Property
      *
      * @return static
      */
-    public static function make(ReflectionProperty $reflectionProperty, AbstractData $data): self
+    public static function make(\ReflectionProperty $reflectionProperty, AbstractData $data): self
     {
         return new self($reflectionProperty, $data);
     }
@@ -81,12 +76,12 @@ final class Property
         $properties = [];
 
         try {
-            $reflectionClass = new ReflectionClass($class);
+            $reflectionClass = new \ReflectionClass($class);
         } catch (ReflectionException) {
             return $properties;
         }
 
-        foreach ($reflectionClass->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
+        foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
             if ($property->isStatic()) {
                 continue;
             }
@@ -107,7 +102,7 @@ final class Property
      */
     public static function fromKey(string $key, AbstractData $data): self
     {
-        return new self(new ReflectionProperty($data, $key), $data);
+        return new self(new \ReflectionProperty($data, $key), $data);
     }
 
     /**
@@ -322,19 +317,19 @@ final class Property
             return [];
         }
 
-        if ($type instanceof ReflectionUnionType) {
+        if ($type instanceof \ReflectionUnionType) {
             return [
                 new Types\UnionType($type),
             ];
         }
 
-        if ($type instanceof ReflectionNamedType) {
+        if ($type instanceof \ReflectionNamedType) {
             return [
                 new Types\NamedReflectedType($type),
             ];
         }
 
-        if ($type instanceof ReflectionType && ! $type->allowsNull()) {
+        if ($type instanceof \ReflectionType && ! $type->allowsNull()) {
             return [
                 new Types\NotNullType(),
             ];
