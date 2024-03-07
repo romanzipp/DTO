@@ -95,7 +95,7 @@ abstract class AbstractData implements AbstractDataInterface, \JsonSerializable
      *
      * @param string $key
      *
-     * @return \romanzipp\DTO\Property
+     * @return Property
      */
     private function getProperty(string $key): Property
     {
@@ -171,7 +171,7 @@ abstract class AbstractData implements AbstractDataInterface, \JsonSerializable
             throw new \InvalidArgumentException("The given case formatter `{$case}` is invalid");
         }
 
-        /** @var \romanzipp\DTO\Cases\AbstractCase $caseFormatter */
+        /** @var AbstractCase $caseFormatter */
         $caseFormatter = new $case($values);
 
         return $caseFormatter->format();

@@ -14,7 +14,7 @@ class InvalidDataException extends \InvalidArgumentException
     private array $properties = [];
 
     /**
-     * @param \romanzipp\DTO\Property $property
+     * @param Property $property
      * @param mixed $value
      *
      * @return self

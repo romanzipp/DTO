@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace romanzipp\DTO;
 
-use ReflectionException;
 use romanzipp\DTO\Exceptions\InvalidDataException;
 use romanzipp\DTO\Values\MissingValue;
 
@@ -54,7 +53,7 @@ final class Property
      * Create a new class instance.
      *
      * @param \ReflectionProperty $reflectionProperty
-     * @param \romanzipp\DTO\AbstractData $data
+     * @param AbstractData $data
      *
      * @return static
      */
@@ -67,7 +66,7 @@ final class Property
      * Collect all properties form a given class and optional instance.
      *
      * @param string $class
-     * @param \romanzipp\DTO\AbstractData|null $data
+     * @param AbstractData|null $data
      *
      * @return \romanzipp\DTO\Property[]
      */
@@ -77,7 +76,7 @@ final class Property
 
         try {
             $reflectionClass = new \ReflectionClass($class);
-        } catch (ReflectionException) {
+        } catch (\ReflectionException) {
             return $properties;
         }
 
@@ -96,7 +95,7 @@ final class Property
      * Create an instance from a given data instance and property key.
      *
      * @param string $key
-     * @param \romanzipp\DTO\AbstractData $data
+     * @param AbstractData $data
      *
      * @return $this
      */
@@ -106,7 +105,7 @@ final class Property
     }
 
     /**
-     * @param \romanzipp\DTO\AbstractData $data
+     * @param AbstractData $data
      *
      * @return \romanzipp\DTO\Property[]
      */
@@ -145,7 +144,7 @@ final class Property
      *
      * @param mixed $value
      *
-     * @return \romanzipp\DTO\Exceptions\InvalidDataException|null
+     * @return InvalidDataException|null
      */
     public function getError(mixed $value): ?InvalidDataException
     {
@@ -273,7 +272,7 @@ final class Property
      * Check if a property has been initialized with a value.
      * This also returns true if a property has been declared with a default value.
      *
-     * @param \romanzipp\DTO\AbstractData $data
+     * @param AbstractData $data
      *
      * @return bool
      */
